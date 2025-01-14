@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                                 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+    <persistence-unit name="like_hero_to_zero" transaction-type="RESOURCE_LOCAL">
+        <!-- JPA Provider -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Specify the JPA entity classes -->
+        <class>com.likeherotozero.model.Co2Emission</class>
+
+        <!-- Database Connection Details -->
+        <properties>
+            <!-- JDBC URL -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/like_hero_to_zero"/>
+            <!-- Database Username -->
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <!-- Database Password -->
+            <property name="javax.persistence.jdbc.password" value="Boobie2024."/>
+            <!-- JDBC Driver -->
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            
+            <!-- Hibernate Dialect -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <!-- Show SQL Statements in Console -->
+            <property name="hibernate.show_sql" value="true"/>
+            <!-- Format SQL Output -->
+            <property name="hibernate.format_sql" value="true"/>
+            <!-- Hibernate HBM2DDL Settings -->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>

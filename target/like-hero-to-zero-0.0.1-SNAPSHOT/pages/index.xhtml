@@ -1,0 +1,51 @@
+<ui:composition template="/templates/template.xhtml"
+                 xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="content">
+        <h1>Welcome to Like Hero To Zero</h1>
+
+        <!-- Notification messages -->
+        <p:growl id="growl" showDetail="true" />
+
+        <!-- Form for country search -->
+        <h:form id="search-form">
+            <!-- Input for Country -->
+            <p:inputText id="country" value="#{indexBean.country}" placeholder="Enter Country" />
+            
+            <!-- Search Button -->
+            <p:commandButton value="Search" 
+                             action="#{indexBean.search}" 
+                             update="results growl" />
+        </h:form>
+
+        <!-- Section for search results -->
+        <h:panelGroup id="results" layout="block" rendered="#{not empty indexBean.searchResults}">
+            <h2>Search Results</h2>
+
+            <!-- DataTable for Displaying Search Results -->
+            <p:dataTable value="#{indexBean.searchResults}" var="result" emptyMessage="No results found.">
+                <!-- Column for Country -->
+                <p:column headerText="Country">
+                    <h:outputText value="#{result.country}" />
+                </p:column>
+
+                <!-- Column for Year -->
+                <p:column headerText="Year">
+                    <h:outputText value="#{result.year}" />
+                </p:column>
+
+                <!-- Column for CO2 Emissions -->
+                <p:column headerText="CO2 Emissions (kt)">
+                    <h:outputText value="#{result.emissionKt}" />
+                </p:column>
+
+                <!-- Column for Data Source -->
+                <p:column headerText="Data Source">
+                    <h:outputText value="#{result.dataSource}" />
+                </p:column>
+            </p:dataTable>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>
