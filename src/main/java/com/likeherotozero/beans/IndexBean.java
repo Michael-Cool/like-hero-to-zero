@@ -6,21 +6,25 @@ import com.likeherotozero.service.Co2EmissionService;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.annotation.PostConstruct;
 import java.util.List;
-import javax.persistence.EntityManager;
 
 @Named
 @RequestScoped
 public class IndexBean {
     private String country;
+    private List<String> countries; // List of available countries
     private List<Co2Emission> searchResults;
 
-    // Inject the Co2EmissionService
     @Inject
     private Co2EmissionService emissionService;
-    private EntityManager entityManager;
 
-    // Getter and Setter for 'country'
+    @PostConstruct
+    public void init() {
+        // Populate the list of countries (static for now, or fetch dynamically)
+        countries = List.of("USA", "Germany", "France", "China", "India");
+    }
+
     public String getCountry() {
         return country;
     }
@@ -29,38 +33,23 @@ public class IndexBean {
         this.country = country;
     }
 
-    // Getter for searchResults
+    public List<String> getCountries() {
+        return countries;
+    }
+
     public List<Co2Emission> getSearchResults() {
         return searchResults;
     }
 
-    // Search method
     public void search() {
-        System.out.println("Searching for country: " + country); // Log the country being searched
+        System.out.println("DEBUG: Searching for country: " + country);
 
         try {
-            searchResults = entityManager.createQuery(
-                "SELECT e FROM Co2Emission e WHERE e.country = :country",
-                Co2Emission.class
-            ).setParameter("country", country).getResultList();
-
-            System.out.println("Search results size: " + searchResults.size()); // Log number of results found
-
-            if (!searchResults.isEmpty()) {
-                searchResults.forEach(result -> {
-                    System.out.println("Result: " + result.getCountry() + ", Year: " + result.getYear());
-                });
-            } else {
-                System.out.println("No results found for country: " + country);
-            }
+            searchResults = emissionService.getEmissionsByCountry(country);
+            System.out.println("DEBUG: Number of results fetched: " + searchResults.size());
         } catch (Exception e) {
-            System.err.println("Error during search: " + e.getMessage()); // Log any errors
+            System.err.println("ERROR: Exception during search: " + e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    // Fetch all emissions from the database (for testing purposes)
-    public void fetchAllEmissions() {
-        searchResults = emissionService.getAllEmissions();
     }
 }

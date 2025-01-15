@@ -11,6 +11,14 @@ public class Co2EmissionService {
 
     @Inject
     private EntityManager entityManager;
+    
+    public List<Co2Emission> getEmissionsByCountry(String country) {
+        return entityManager.createQuery(
+                "SELECT e FROM Co2Emission e WHERE e.country = :country", Co2Emission.class)
+                .setParameter("country", country)
+                .getResultList();
+    }
+
 
     // Method to retrieve all CO2 emissions
     public List<Co2Emission> getAllEmissions() {
@@ -18,13 +26,12 @@ public class Co2EmissionService {
     }
 
     // Method to retrieve emissions by country
-    public List<Co2Emission> getEmissionsByCountry(String country) {
+    public List<Co2Emission> findEmissionsByCountry(String country) {
         return entityManager.createQuery(
             "SELECT e FROM Co2Emission e WHERE e.country = :country", 
             Co2Emission.class
         ).setParameter("country", country).getResultList();
     }
-
     // Method to add a new CO2 emission
     public void addEmission(Co2Emission emission) {
         entityManager.getTransaction().begin();
