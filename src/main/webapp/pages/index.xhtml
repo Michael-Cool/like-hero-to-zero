@@ -4,42 +4,58 @@
                  xmlns:p="http://primefaces.org/ui"
                  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
+
     <ui:define name="content">
-        <h1>Welcome to Like Hero To Zero</h1>
+        <!-- Header -->
+        <div class="header">
+            <h1>Like Hero To Zero</h1>
+            <p class="subtitle">Nachhaltigkeit im Blick</p>
+        </div>
+
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h2>Willkommen auf Like Hero To Zero</h2>
+            <p>
+                Auf dieser Webseite können Sie Daten zu den CO₂-Emissionen verschiedener Länder einsehen.
+                <br/>
+                Unser Ziel ist es, mit diesen Informationen ein Bewusstsein für den Klimaschutz zu schaffen.
+            </p>
+        </div>
 
         <!-- Notification messages -->
         <p:growl id="growl" showDetail="true" />
 
-        <!-- Form for country search -->
-        <h:form id="search-form">
-            <!-- Dropdown for Country Selection -->
-            <p:selectOneMenu id="country" value="#{indexBean.country}">
-                <f:selectItem itemLabel="Select a Country" itemValue="" />
-                <f:selectItems value="#{indexBean.countries}" var="country" itemValue="#{country}" itemLabel="#{country}" />
-            </p:selectOneMenu>
-            
-            <!-- Search Button -->
-            <p:commandButton value="Search" 
-                             action="#{indexBean.search}" 
-                             update="results growl" />
-        </h:form>
+        <!-- Form Section -->
+        <div class="form-section">
+            <h:form id="search-form">
+                <!-- Dropdown for Country Selection -->
+                <p:selectOneMenu id="country" value="#{indexBean.country}" styleClass="dropdown">
+                    <f:selectItem itemLabel="Land auswählen" itemValue="" />
+                    <f:selectItems value="#{indexBean.countries}" var="country" itemValue="#{country}" itemLabel="#{country}" />
+                </p:selectOneMenu>
+                
+                <!-- Search Button -->
+                <p:commandButton value="Suchen" 
+                                 action="#{indexBean.search}" 
+                                 update="results growl" 
+                                 styleClass="search-button" />
+            </h:form>
+        </div>
 
-        <!-- Section for search results -->
-        <h:panelGroup id="results" layout="block">
-            <h2>Search Results</h2>
-
-            <!-- DataTable for Displaying Search Results -->
-            <p:dataTable value="#{indexBean.searchResults}" var="result" emptyMessage="No results found.">
-                <p:column headerText="Country">
+        <!-- Search Results Section -->
+        <h:panelGroup id="results" layout="block" class="results-section">
+            <h2>Suchergebnisse</h2>
+            <p:dataTable value="#{indexBean.searchResults}" var="result" emptyMessage="Kein Land mit diesen Daten gefunden." styleClass="results-table">
+                <p:column headerText="Land">
                     <h:outputText value="#{result.country}" />
                 </p:column>
-                <p:column headerText="Year">
+                <p:column headerText="Jahr">
                     <h:outputText value="#{result.year}" />
                 </p:column>
-                <p:column headerText="CO2 Emissions (kt)">
+                <p:column headerText="CO₂-Emissionen (kt)">
                     <h:outputText value="#{result.emissionKt}" />
                 </p:column>
-                <p:column headerText="Data Source">
+                <p:column headerText="Datenquelle">
                     <h:outputText value="#{result.dataSource}" />
                 </p:column>
             </p:dataTable>
