@@ -11,21 +11,25 @@
     <h:body>
         <div style="display: grid; grid-template-rows: auto 1fr; grid-template-columns: 200px 1fr; height: 100vh; gap: 10px;">
             <!-- Header -->
-            <div style="grid-column: 1 / -1; background-color: #f4f4f4; padding: 10px;">
-                <h:outputText value="Header: Like Hero To Zero" />
+            <div style="grid-column: 1 / -1; background-color: #4CAF50; color: white; padding: 15px; text-align: center;">
+                <h1 style="margin: 0;">Like Hero To Zero</h1>
             </div>
 
             <!-- Sidebar -->
-            <div style="background-color: #eaeaea; padding: 10px;">
+            <div style="background-color: #f9f9f9; padding: 10px; border-right: 1px solid #ddd;">
                 <h:form>
-                    <p:menu>
-                        <p:menuitem value="Home" outcome="index" />
+                    <p:menu styleClass="sidebar-menu">
+                        <p:menuitem value="Home" outcome="index" icon="pi pi-home" />
+                        <p:menuitem value="Login" outcome="login" icon="pi pi-user" />
+                        <p:menuitem value="Impressum" outcome="impressum" icon="pi pi-info-circle" />
+                        <p:menuitem value="Kontakt" outcome="contact" icon="pi pi-envelope" />
+                        <p:menuitem value="Über uns" outcome="about" icon="pi pi-users" />
                     </p:menu>
                 </h:form>
             </div>
 
             <!-- Content -->
-            <div style="padding: 10px;">
+            <div style="padding: 20px;">
                 <ui:insert name="content" />
             </div>
         </div>

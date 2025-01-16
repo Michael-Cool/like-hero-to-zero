@@ -107,3 +107,203 @@ body {
     width: 400px;
     text-align: center;
 }
+
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-header {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.login-subtext {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #777;
+}
+
+.login-form .form-field {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.login-form .form-field p {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.login-form p:inputText, 
+.login-form p:password {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.form-actions {
+    margin-top: 20px;
+}
+
+.form-actions p:commandButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-actions p:commandButton:hover {
+    background-color: #45a049;
+}
+
+.login-links {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+.login-links a {
+    color: #4CAF50;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.login-links a:hover {
+    text-decoration: underline;
+}
+
+.impressum-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+}
+
+.impressum-header {
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+.impressum-subtext {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #555;
+    text-align: center;
+}
+
+.impressum-section {
+    margin-bottom: 20px;
+}
+
+.impressum-section h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #4CAF50;
+}
+
+.impressum-section p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.contact-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.contact-header {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.contact-subtext {
+    text-align: center;
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.contact-details {
+    margin-bottom: 30px;
+}
+
+.contact-details h2 {
+    font-size: 1.5rem;
+    color: #444;
+}
+
+.contact-details p {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+.about-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    line-height: 1.6;
+}
+
+.about-header {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.about-intro {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.about-mission,
+.about-team,
+.about-thanks {
+    margin-bottom: 30px;
+}
+
+.about-mission h2,
+.about-team h2,
+.about-thanks h2 {
+    font-size: 1.5rem;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.about-mission p,
+.about-team p,
+.about-thanks p {
+    font-size: 1rem;
+    color: #555;
+}
