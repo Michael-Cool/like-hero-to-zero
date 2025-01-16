@@ -18,6 +18,7 @@
             <p>
                 Auf dieser Webseite können Sie Daten zu den CO₂-Emissionen verschiedener Länder einsehen.
                 <br/>
+                <br/>
                 Unser Ziel ist es, mit diesen Informationen ein Bewusstsein für den Klimaschutz zu schaffen.
             </p>
         </div>
@@ -45,7 +46,7 @@
         <!-- Search Results Section -->
         <h:panelGroup id="results" layout="block" class="results-section">
             <h2>Suchergebnisse</h2>
-            <p:dataTable value="#{indexBean.searchResults}" var="result" emptyMessage="Kein Land mit diesen Daten gefunden." styleClass="results-table">
+            <p:dataTable value="#{indexBean.searchResults}" var="result" emptyMessage="Bitte wählen Sie ein Land aus." styleClass="results-table">
                 <p:column headerText="Land">
                     <h:outputText value="#{result.country}" />
                 </p:column>

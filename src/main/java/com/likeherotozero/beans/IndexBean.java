@@ -1,12 +1,11 @@
 package com.likeherotozero.beans;
 
-import com.likeherotozero.model.Co2Emission;
 import com.likeherotozero.service.Co2EmissionService;
-
-import javax.inject.Named;
+import com.likeherotozero.model.Co2Emission;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.annotation.PostConstruct;
+import javax.inject.Named;
 import java.util.List;
 
 @Named
@@ -21,8 +20,8 @@ public class IndexBean {
 
     @PostConstruct
     public void init() {
-        // Populate the list of countries (static for now, or fetch dynamically)
-        countries = List.of("USA", "Germany", "France", "China", "India");
+        // Fetch the list of countries from the database
+        countries = emissionService.getDistinctCountries();
     }
 
     public String getCountry() {
