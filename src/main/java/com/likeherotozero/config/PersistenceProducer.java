@@ -1,6 +1,8 @@
 package com.likeherotozero.config;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -9,7 +11,7 @@ import javax.persistence.Persistence;
 @ApplicationScoped
 public class PersistenceProducer {
 
-    private static final String PERSISTENCE_UNIT_NAME = "like_hero_to_zero"; // Ensure this matches persistence.xml
+    private static final String PERSISTENCE_UNIT_NAME = "like_hero_to_zero";
 
     private EntityManagerFactory entityManagerFactory;
 
@@ -23,7 +25,14 @@ public class PersistenceProducer {
     }
 
     @Produces
+    @RequestScoped
     public EntityManager produceEntityManager() {
         return entityManagerFactory.createEntityManager();
+    }
+
+    public void closeEntityManager(@Disposes EntityManager entityManager) {
+        if (entityManager.isOpen()) {
+            entityManager.close();
+        }
     }
 }

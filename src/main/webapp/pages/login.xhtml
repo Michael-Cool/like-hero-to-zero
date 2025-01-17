@@ -4,6 +4,10 @@
                  xmlns:p="http://primefaces.org/ui"
                  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:define name="content">
+    
+            <!-- Notification messages -->
+        <p:growl id="growl" showDetail="true" />
+    
         <!-- Login Section -->
         <div class="login-container">
             <h1 class="login-header">Willkommen zurück!</h1>
@@ -24,7 +28,7 @@
 
                 <!-- Login Button -->
                 <div class="form-actions">
-                    <p:commandButton value="Anmelden" action="#{loginBean.login}" icon="pi pi-sign-in" />
+                    <p:commandButton value="Anmelden" action="#{loginBean.login}" icon="pi pi-sign-in" update="login-form growl" />
                 </div>
             </h:form>
 

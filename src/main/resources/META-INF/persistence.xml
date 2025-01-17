@@ -11,6 +11,7 @@
 
         <!-- Specify the JPA entity classes -->
         <class>com.likeherotozero.model.Co2Emission</class>
+        <class>com.likeherotozero.model.User</class>
 
         <!-- Database Connection Details -->
         <properties>
