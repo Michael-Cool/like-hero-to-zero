@@ -1,0 +1,36 @@
+<ui:composition template="/templates/template.xhtml"
+                 xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+        <!-- Page Title -->
+        <h1>Add CO2 Emission Data</h1>
+
+        <!-- Content visible only to scientists -->
+        <h:panelGroup rendered="#{loginBean.isScientist()}">
+            <h2>Enter CO2 Emission Data</h2>
+            <h:form>
+                <p:outputLabel for="country" value="Country" />
+                <p:inputText id="country" value="#{addDataBean.country}" />
+
+                <p:outputLabel for="year" value="Year" />
+                <p:inputText id="year" value="#{addDataBean.year}" />
+
+                <p:outputLabel for="emissionKt" value="Emission (kt)" />
+                <p:inputText id="emissionKt" value="#{addDataBean.emissionKt}" />
+
+                <p:outputLabel for="dataSource" value="Data Source" />
+                <p:inputText id="dataSource" value="#{addDataBean.dataSource}" />
+
+                <p:commandButton value="Submit" action="#{addDataBean.addData}" />
+            </h:form>
+        </h:panelGroup>
+
+        <!-- Access Denied Message -->
+        <h:panelGroup rendered="#{!loginBean.isScientist()}">
+            <h2>Zugriff verweigert</h2>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>

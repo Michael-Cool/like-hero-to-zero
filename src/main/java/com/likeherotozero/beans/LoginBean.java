@@ -5,9 +5,9 @@ import com.likeherotozero.model.User;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import java.io.Serializable;
+import javax.persistence.EntityManager;
+
 
 @Named
 @SessionScoped
@@ -16,11 +16,12 @@ public class LoginBean implements Serializable {
 
     private String username;
     private String password;
+    private User loggedInUser;
 
     @Inject
-    private EntityManager entityManager; // Inject the EntityManager
+    private EntityManager entityManager;
 
-    // Getters and setters
+    // Getters and Setters
     public String getUsername() {
         return username;
     }
@@ -37,21 +38,46 @@ public class LoginBean implements Serializable {
         this.password = password;
     }
 
-    // Login method
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    // Login Logic
     public String login() {
         try {
             User user = entityManager.createQuery(
-                "SELECT u FROM User u WHERE u.username = :username AND u.password = :password", User.class
-            ).setParameter("username", username)
-             .setParameter("password", password)
-             .getSingleResult();
+                "SELECT u FROM User u WHERE u.username = :username AND u.password = :password", User.class)
+                .setParameter("username", username)
+                .setParameter("password", password) // In production, passwords should be encrypted!
+                .getSingleResult();
 
-            System.out.println("Login successful for user: " + user.getUsername());
-            return "index.xhtml?faces-redirect=true";
-
-        } catch (NoResultException e) {
+            if (user != null) {
+                loggedInUser = user;
+                System.out.println("Login successful for user: " + username);
+                return "/pages/index.xhtml?faces-redirect=true"; // Redirect to a secure page
+            }
+        } catch (Exception e) {
             System.out.println("Login failed for user: " + username);
-            return null; // Stay on the login page
         }
+        return null;
+    }
+
+    // Logout Logic
+    public String logout() {
+        loggedInUser = null; // Clear session
+        return "/login.xhtml?faces-redirect=true";
+    }
+
+    // Access Control Methods
+    public boolean isLoggedIn() {
+        return loggedInUser != null;
+    }
+
+    public boolean isScientist() {
+        return isLoggedIn() && "SCIENTIST".equals(loggedInUser.getRole());
+    }
+    
+    public boolean isNotLoggedIn() {
+        return !isLoggedIn();
     }
 }

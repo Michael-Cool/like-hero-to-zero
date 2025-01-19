@@ -16,17 +16,28 @@
             </div>
 
             <!-- Sidebar -->
-            <div style="background-color: #f9f9f9; padding: 10px; border-right: 1px solid #ddd;">
-                <h:form>
-                    <p:menu styleClass="sidebar-menu">
-                        <p:menuitem value="Home" outcome="index" icon="pi pi-home" />
-                        <p:menuitem value="Login" outcome="login" icon="pi pi-user" />
-                        <p:menuitem value="Impressum" outcome="impressum" icon="pi pi-info-circle" />
-                        <p:menuitem value="Kontakt" outcome="contact" icon="pi pi-envelope" />
-                        <p:menuitem value="Über uns" outcome="about" icon="pi pi-users" />
-                    </p:menu>
-                </h:form>
-            </div>
+			<div style="background-color: #f9f9f9; padding: 10px; border-right: 1px solid #ddd;">
+			    <h:form>
+			        <p:menu>
+			            <!-- Public Links -->
+			            <p:menuitem value="Home" outcome="/pages/index.xhtml" />
+			            <p:menuitem value="Impressum" outcome="/pages/impressum.xhtml" />
+			            <p:menuitem value="Kontakt" outcome="/pages/contact.xhtml" />
+			            <p:menuitem value="Über uns" outcome="/pages/about.xhtml" />
+			
+			            <!-- Scientist-Only Links -->
+			            <p:submenu label="Backend" rendered="#{loginBean.isLoggedIn() and loginBean.isScientist()}">
+			                <p:menuitem value="Add Data" outcome="/secure/add-data.xhtml" />
+			                    <p:menuitem value="Scientist Dashboard" outcome="/secure/scientist-dashboard.xhtml" />
+			                <p:menuitem value="Manage Data" outcome="/secure/manage-data.xhtml" />
+			            </p:submenu>
+			
+			            <!-- Login/Logout -->
+			            <p:menuitem value="Login" outcome="/pages/login.xhtml" rendered="#{loginBean.isNotLoggedIn()}" />
+			            <p:menuitem value="Logout" action="#{loginBean.logout}" rendered="#{loginBean.isLoggedIn()}" />
+			        </p:menu>
+			    </h:form>
+			</div>
 
             <!-- Content -->
             <div style="padding: 20px;">
