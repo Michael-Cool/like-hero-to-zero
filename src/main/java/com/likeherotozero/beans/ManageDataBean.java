@@ -6,6 +6,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class ManageDataBean {
         return newEmission;
     }
 
+    @Transactional
     public void saveNewEmission() {
         try {
             System.out.println("DEBUG: Attempting to save new emission: " +
@@ -29,14 +31,19 @@ public class ManageDataBean {
                 ", Year=" + newEmission.getYear() + 
                 ", EmissionKt=" + newEmission.getEmissionKt() + 
                 ", DataSource=" + newEmission.getDataSource());
-
+            
+            entityManager.getTransaction().begin(); // Start transaction
             save(newEmission); // Persist or merge the emission
+            entityManager.getTransaction().commit(); // Commit transaction
+            
             System.out.println("DEBUG: Emission saved successfully.");
-
             newEmission = new Co2Emission(); // Reset form for new input
         } catch (Exception e) {
             System.err.println("ERROR: Failed to save new emission: " + e.getMessage());
             e.printStackTrace();
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback(); // Rollback in case of error
+            }
         }
     }
 
@@ -50,6 +57,7 @@ public class ManageDataBean {
         }
     }
 
+    @Transactional
     public void save(Co2Emission emission) {
         try {
             if (emission.getId() == 0) {
@@ -65,6 +73,7 @@ public class ManageDataBean {
         }
     }
 
+    @Transactional
     public void delete(Co2Emission emission) {
         try {
             Co2Emission toDelete = entityManager.find(Co2Emission.class, emission.getId());
