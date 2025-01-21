@@ -36,18 +36,34 @@ public class ScientistDataBean implements Serializable {
     @Transactional
     public void saveEmission() {
         try {
-            System.out.println("DEBUG: EntityManager is active: " + emissionService.isEntityManagerOpen());
-            System.out.println("DEBUG: Emission to save - Country: " + newEmission.getCountry()
+            System.out.println("DEBUG: Saving emission - Country: " + newEmission.getCountry()
                     + ", Year: " + newEmission.getYear()
                     + ", EmissionKt: " + newEmission.getEmissionKt()
                     + ", DataSource: " + newEmission.getDataSource());
-            emissionService.save(newEmission);
-            newEmission = new Co2Emission();
-            System.out.println("DEBUG: Emission saved successfully.");
+            
+            if (newEmission.getId() == 0) {
+                // If it's a new emission (no ID), create it
+                emissionService.save(newEmission);
+                System.out.println("DEBUG: New emission saved successfully.");
+            } else {
+                // If it's an existing emission, update it
+                emissionService.save(newEmission);
+                System.out.println("DEBUG: Emission updated successfully.");
+            }
+            
+            newEmission = new Co2Emission();  // Clear the form after saving
         } catch (Exception e) {
             System.err.println("ERROR: Failed to save emission - " + e.getMessage());
             e.printStackTrace();
         }
+    }
+    
+    public void editEmission(Co2Emission emission) {
+        this.newEmission = emission;  // Set the newEmission to the one selected for editing
+        System.out.println("DEBUG: Editing emission - Country: " + emission.getCountry()
+                + ", Year: " + emission.getYear()
+                + ", EmissionKt: " + emission.getEmissionKt()
+                + ", DataSource: " + emission.getDataSource());
     }
 
     public void deleteEmission(Co2Emission emission) {

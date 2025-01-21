@@ -9,7 +9,10 @@
         <h:form id="main-form">
             <!-- Add New Emission Form -->
             <p:messages id="messages" autoUpdate="true" />
-            <h2>Add New Emission</h2>
+            <h2>
+                <ui:fragment rendered="#{empty scientistDataBean.newEmission.id}">Add New Emission</ui:fragment>
+                <ui:fragment rendered="#{not empty scientistDataBean.newEmission.id}">Edit Emission</ui:fragment>
+            </h2>
             <p:panelGrid columns="2">
                 <p:outputLabel for="country" value="Country" />
                 <p:inputText id="country" value="#{scientistDataBean.newEmission.country}" required="true" />
@@ -24,7 +27,7 @@
                 <p:inputText id="dataSource" value="#{scientistDataBean.newEmission.dataSource}" required="true" />
             </p:panelGrid>
 
-            <p:commandButton value="Add Emission" 
+            <p:commandButton value="Save Emission"
                              action="#{scientistDataBean.saveEmission}" 
                              update=":main-form:messages :main-form:emissions-table" />
 
@@ -44,6 +47,11 @@
                     <h:outputText value="#{emission.dataSource}" />
                 </p:column>
                 <p:column headerText="Actions">
+                    <p:commandButton value="Edit"
+                                     icon="ui-icon-pencil" 
+                                     action="#{scientistDataBean.editEmission(emission)}"
+                                     update=":main-form:emissions-table :main-form:messages"
+                                     process="@this" />
                     <p:commandButton value="Delete" 
                                      action="#{scientistDataBean.deleteEmission(emission)}" 
                                      update=":main-form:messages :main-form:emissions-table" />
