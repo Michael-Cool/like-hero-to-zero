@@ -1,10 +1,12 @@
 package com.likeherotozero.service;
 
+import com.likeherotozero.model.Co2Emission;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
-import com.likeherotozero.model.Co2Emission;
 
 @ApplicationScoped
 public class Co2EmissionService {
@@ -12,38 +14,60 @@ public class Co2EmissionService {
     @Inject
     private EntityManager entityManager;
 
-    // Method to get emissions by country
-    public List<Co2Emission> getEmissionsByCountry(String country) {
-        return entityManager.createQuery(
-                "SELECT e FROM Co2Emission e WHERE e.country = :country", Co2Emission.class)
-                .setParameter("country", country)
-                .getResultList();
+    @Transactional
+    public void save(Co2Emission emission) {
+        if (emission.getId() == 0) {
+            entityManager.persist(emission);
+            System.out.println("DEBUG: New emission persisted.");
+        } else {
+            entityManager.merge(emission);
+            System.out.println("DEBUG: Existing emission updated.");
+        }
     }
 
-    // Method to retrieve all CO2 emissions
-    public List<Co2Emission> getAllEmissions() {
+    public List<Co2Emission> findAll() {
         return entityManager.createQuery("SELECT e FROM Co2Emission e", Co2Emission.class).getResultList();
     }
 
-    // Method to find emissions by country
-    public List<Co2Emission> findEmissionsByCountry(String country) {
-        return entityManager.createQuery(
-                "SELECT e FROM Co2Emission e WHERE e.country = :country", 
-                Co2Emission.class
-        ).setParameter("country", country).getResultList();
+    @Transactional
+    public void delete(Co2Emission emission) {
+        Co2Emission toDelete = entityManager.find(Co2Emission.class, emission.getId());
+        if (toDelete != null) {
+            entityManager.remove(toDelete);
+            System.out.println("DEBUG: Emission deleted successfully.");
+        } else {
+            System.err.println("ERROR: Emission not found for deletion.");
+        }
     }
 
-    // Method to add a new CO2 emission
-    public void addEmission(Co2Emission emission) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(emission);
-        entityManager.getTransaction().commit();
+    @Transactional
+    public void deleteById(int id) {
+        Co2Emission toDelete = entityManager.find(Co2Emission.class, id);
+        if (toDelete != null) {
+            entityManager.remove(toDelete);
+            System.out.println("DEBUG: Emission with ID " + id + " deleted successfully.");
+        } else {
+            System.err.println("ERROR: No emission found with ID " + id + " for deletion.");
+        }
     }
 
-    // Method to fetch distinct countries from the database
     public List<String> getDistinctCountries() {
-        return entityManager.createQuery(
-                "SELECT DISTINCT e.country FROM Co2Emission e", String.class)
-                .getResultList();
+        try {
+            return entityManager.createQuery("SELECT DISTINCT e.country FROM Co2Emission e", String.class).getResultList();
+        } catch (Exception e) {
+            System.err.println("ERROR: Failed to fetch distinct countries: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    public List<Co2Emission> getEmissionsByCountry(String country) {
+        try {
+            return entityManager.createQuery("SELECT e FROM Co2Emission e WHERE e.country = :country", Co2Emission.class)
+                    .setParameter("country", country)
+                    .getResultList();
+        } catch (Exception e) {
+            System.err.println("ERROR: Failed to fetch emissions for country: " + country + " - " + e.getMessage());
+            throw e;
+        }
     }
 }

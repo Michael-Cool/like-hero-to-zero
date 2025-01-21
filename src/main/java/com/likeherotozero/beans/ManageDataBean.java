@@ -1,12 +1,11 @@
 package com.likeherotozero.beans;
 
 import com.likeherotozero.model.Co2Emission;
+import com.likeherotozero.service.Co2EmissionService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
 public class ManageDataBean {
 
     @Inject
-    private EntityManager entityManager;
+    private Co2EmissionService co2EmissionService;
 
     private Co2Emission newEmission = new Co2Emission();
 
@@ -23,7 +22,6 @@ public class ManageDataBean {
         return newEmission;
     }
 
-    @Transactional
     public void saveNewEmission() {
         try {
             System.out.println("DEBUG: Attempting to save new emission: " +
@@ -31,25 +29,19 @@ public class ManageDataBean {
                 ", Year=" + newEmission.getYear() + 
                 ", EmissionKt=" + newEmission.getEmissionKt() + 
                 ", DataSource=" + newEmission.getDataSource());
-            
-            entityManager.getTransaction().begin(); // Start transaction
-            save(newEmission); // Persist or merge the emission
-            entityManager.getTransaction().commit(); // Commit transaction
-            
+
+            co2EmissionService.save(newEmission); // Delegate to service
             System.out.println("DEBUG: Emission saved successfully.");
             newEmission = new Co2Emission(); // Reset form for new input
         } catch (Exception e) {
             System.err.println("ERROR: Failed to save new emission: " + e.getMessage());
             e.printStackTrace();
-            if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback(); // Rollback in case of error
-            }
         }
     }
 
     public List<Co2Emission> getEmissions() {
         try {
-            return entityManager.createQuery("SELECT e FROM Co2Emission e", Co2Emission.class).getResultList();
+            return co2EmissionService.findAll(); // Delegate to service
         } catch (Exception e) {
             System.err.println("ERROR: Failed to fetch emissions: " + e.getMessage());
             e.printStackTrace();
@@ -57,34 +49,22 @@ public class ManageDataBean {
         }
     }
 
-    @Transactional
-    public void save(Co2Emission emission) {
+    public void delete(Co2Emission emission) {
         try {
-            if (emission.getId() == 0) {
-                System.out.println("DEBUG: Persisting new emission.");
-                entityManager.persist(emission);
-            } else {
-                System.out.println("DEBUG: Merging existing emission with ID=" + emission.getId());
-                entityManager.merge(emission);
-            }
+            co2EmissionService.delete(emission); // Delegate to service
+            System.out.println("DEBUG: Emission deleted successfully.");
         } catch (Exception e) {
-            System.err.println("ERROR: Failed to save emission: " + e.getMessage());
+            System.err.println("ERROR: Failed to delete emission: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    @Transactional
-    public void delete(Co2Emission emission) {
+    public void deleteById(int id) {
         try {
-            Co2Emission toDelete = entityManager.find(Co2Emission.class, emission.getId());
-            if (toDelete != null) {
-                System.out.println("DEBUG: Deleting emission with ID=" + emission.getId());
-                entityManager.remove(toDelete);
-            } else {
-                System.err.println("ERROR: Emission not found for deletion.");
-            }
+            co2EmissionService.deleteById(id); // Delegate to service
+            System.out.println("DEBUG: Emission with ID " + id + " deleted successfully.");
         } catch (Exception e) {
-            System.err.println("ERROR: Failed to delete emission: " + e.getMessage());
+            System.err.println("ERROR: Failed to delete emission with ID " + id + ": " + e.getMessage());
             e.printStackTrace();
         }
     }

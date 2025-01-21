@@ -73,6 +73,7 @@
                     <p:commandButton value="Delete" 
                                      action="#{manageDataBean.delete(emission)}" 
                                      update=":main-form:emissions-table :main-form:messages" 
+                                     process="@this" 
                                      icon="pi pi-trash" />
                 </p:column>
             </p:dataTable>
