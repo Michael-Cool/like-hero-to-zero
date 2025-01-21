@@ -1,23 +1,25 @@
 package com.likeherotozero.beans;
 
-import javax.enterprise.context.SessionScoped;
+import com.likeherotozero.model.Co2Emission;
+import com.likeherotozero.service.Co2EmissionService;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.io.Serializable;
+import java.util.List;
 import javax.transaction.Transactional;
 
-import com.likeherotozero.model.Co2Emission;
-
-import java.io.Serializable;
-
-@Named // Marks this as a JSF-managed bean
-@SessionScoped // Bean lifecycle lasts for the user session
+@Named
+@RequestScoped
 public class ScientistDataBean implements Serializable {
 
-    @PersistenceContext // Injects the JPA EntityManager
-    private EntityManager entityManager;
+    private static final long serialVersionUID = 1L;
 
-    private Co2Emission newEmission = new Co2Emission(); // Data for a new record
+    @Inject
+    private Co2EmissionService emissionService;
+
+    private Co2Emission newEmission = new Co2Emission();
 
     public Co2Emission getNewEmission() {
         return newEmission;
@@ -27,9 +29,35 @@ public class ScientistDataBean implements Serializable {
         this.newEmission = newEmission;
     }
 
-    @Transactional // Ensures database operations are part of a transaction
+    public List<Co2Emission> getEmissions() {
+        return emissionService.findAll();
+    }
+
+    @Transactional
     public void saveEmission() {
-        entityManager.persist(newEmission); // Save to database
-        newEmission = new Co2Emission(); // Reset after saving
+        try {
+            System.out.println("DEBUG: EntityManager is active: " + emissionService.isEntityManagerOpen());
+            System.out.println("DEBUG: Emission to save - Country: " + newEmission.getCountry()
+                    + ", Year: " + newEmission.getYear()
+                    + ", EmissionKt: " + newEmission.getEmissionKt()
+                    + ", DataSource: " + newEmission.getDataSource());
+            emissionService.save(newEmission);
+            newEmission = new Co2Emission();
+            System.out.println("DEBUG: Emission saved successfully.");
+        } catch (Exception e) {
+            System.err.println("ERROR: Failed to save emission - " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteEmission(Co2Emission emission) {
+        try {
+            System.out.println("DEBUG: Attempting to delete emission with ID: " + emission.getId());
+            emissionService.delete(emission);
+            System.out.println("DEBUG: Emission deleted successfully.");
+        } catch (Exception e) {
+            System.err.println("ERROR: Failed to delete emission - " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

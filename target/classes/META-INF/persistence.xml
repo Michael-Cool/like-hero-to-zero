@@ -21,8 +21,6 @@
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.transaction.coordinator_class" value="jdbc"/>
         </properties>
     </persistence-unit>
-
 </persistence>

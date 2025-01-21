@@ -31,8 +31,11 @@ public class ManageDataBean {
                 ", DataSource=" + newEmission.getDataSource());
 
             co2EmissionService.save(newEmission); // Delegate to service
+            
             System.out.println("DEBUG: Emission saved successfully.");
+            
             newEmission = new Co2Emission(); // Reset form for new input
+            getEmissions(); // Refresh table data
         } catch (Exception e) {
             System.err.println("ERROR: Failed to save new emission: " + e.getMessage());
             e.printStackTrace();
@@ -69,7 +72,6 @@ public class ManageDataBean {
         }
     }
 
-    // Add a countries property
     public List<String> getCountries() {
         return Arrays.asList("USA", "Germany", "France", "China", "India");
     }
