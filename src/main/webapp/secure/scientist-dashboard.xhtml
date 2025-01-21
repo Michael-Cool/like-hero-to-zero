@@ -7,12 +7,9 @@
         <h1>Manage CO2 Emissions</h1>
 
         <h:form id="main-form">
-            <!-- Add New Emission Form -->
             <p:messages id="messages" autoUpdate="true" />
-            <h2>
-                <ui:fragment rendered="#{empty scientistDataBean.newEmission.id}">Add New Emission</ui:fragment>
-                <ui:fragment rendered="#{not empty scientistDataBean.newEmission.id}">Edit Emission</ui:fragment>
-            </h2>
+            
+            <h2>Add New Emission</h2>
             <p:panelGrid columns="2">
                 <p:outputLabel for="country" value="Country" />
                 <p:inputText id="country" value="#{scientistDataBean.newEmission.country}" required="true" />
@@ -27,11 +24,10 @@
                 <p:inputText id="dataSource" value="#{scientistDataBean.newEmission.dataSource}" required="true" />
             </p:panelGrid>
 
-            <p:commandButton value="Save Emission"
+            <p:commandButton value="Add Emission" 
                              action="#{scientistDataBean.saveEmission}" 
                              update=":main-form:messages :main-form:emissions-table" />
 
-            <!-- Emissions Data Table -->
             <h2>Emissions Data</h2>
             <p:dataTable id="emissions-table" value="#{scientistDataBean.emissions}" var="emission">
                 <p:column headerText="Country">
@@ -49,12 +45,14 @@
                 <p:column headerText="Actions">
                     <p:commandButton value="Edit"
                                      icon="ui-icon-pencil" 
-                                     action="#{scientistDataBean.editEmission(emission)}"
-                                     update=":main-form:emissions-table :main-form:messages"
+                                     action="#{scientistDataBean.editEmission(emission)}" 
+                                     update=":main-form:messages :main-form:emissions-table"
                                      process="@this" />
+
                     <p:commandButton value="Delete" 
                                      action="#{scientistDataBean.deleteEmission(emission)}" 
-                                     update=":main-form:messages :main-form:emissions-table" />
+                                     update=":main-form:messages :main-form:emissions-table"
+                                     process="@this" />
                 </p:column>
             </p:dataTable>
         </h:form>

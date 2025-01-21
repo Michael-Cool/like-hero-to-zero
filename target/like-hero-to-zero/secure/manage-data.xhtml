@@ -1,0 +1,73 @@
+<ui:composition template="/templates/template.xhtml"
+                 xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                 xmlns:f="http://xmlns.jcp.org/jsf/core">>
+    <ui:define name="content">
+        <h1>Manage CO2 Data</h1>
+        <p>Here you can manage CO2 emission records.</p>
+
+        <h:form id="manage-data-form">
+            <!-- DataTable to display CO2 Emissions -->
+            <p:dataTable id="emissionTable" value="#{manageDataBean.emissions}" var="emission"
+                         editable="true" paginator="true" rows="10" rowsPerPageTemplate="5,10,15">
+                <!-- Country Column -->
+                <p:column headerText="Country" style="width: 20%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{emission.country}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{emission.country}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <!-- Year Column -->
+                <p:column headerText="Year" style="width: 10%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{emission.year}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{emission.year}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <!-- CO2 Emissions Column -->
+                <p:column headerText="CO2 Emissions (kt)" style="width: 20%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{emission.emissionKt}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{emission.emissionKt}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <!-- Data Source Column -->
+                <p:column headerText="Data Source" style="width: 20%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{emission.dataSource}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{emission.dataSource}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <!-- Edit/Delete Actions -->
+                <p:column headerText="Actions" style="width: 20%">
+                    <p:commandButton value="Save" icon="pi pi-save"
+                                     action="#{manageDataBean.save(emission)}" update="emissionTable" />
+                    <p:commandButton value="Delete" icon="pi pi-trash"
+                                     action="#{manageDataBean.delete(emission)}" update="emissionTable" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

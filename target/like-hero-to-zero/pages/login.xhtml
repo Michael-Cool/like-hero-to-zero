@@ -1,0 +1,43 @@
+<ui:composition template="/templates/template.xhtml"
+                 xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                 xmlns:p="http://primefaces.org/ui"
+                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="content">
+    
+            <!-- Notification messages -->
+        <p:growl id="growl" showDetail="true" />
+    
+        <!-- Login Section -->
+        <div class="login-container">
+            <h1 class="login-header">Willkommen zurück!</h1>
+            <p class="login-subtext">Bitte melden Sie sich an, um fortzufahren.</p>
+
+            <h:form id="login-form" class="login-form">
+                <!-- Username -->
+                <div class="form-field">
+                    <p:outputLabel for="username" value="Benutzername" />
+                    <p:inputText id="username" value="#{loginBean.username}" placeholder="Geben Sie Ihren Benutzernamen ein" />
+                </div>
+
+                <!-- Password -->
+                <div class="form-field">
+                    <p:outputLabel for="password" value="Passwort" />
+                    <p:password id="password" value="#{loginBean.password}" placeholder="Geben Sie Ihr Passwort ein" />
+                </div>
+
+                <!-- Login Button -->
+                <div class="form-actions">
+                    <p:commandButton value="Anmelden" action="#{loginBean.login}" icon="pi pi-sign-in" update="login-form growl" />
+                </div>
+            </h:form>
+
+            <!-- Additional Links -->
+            <div class="login-links">
+                <h:outputLink value="forgot-password.xhtml">Passwort vergessen?</h:outputLink>
+                <span>|</span>
+                <h:outputLink value="register.xhtml">Neues Konto erstellen</h:outputLink>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
