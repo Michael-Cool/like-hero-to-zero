@@ -35,52 +35,57 @@
             <!-- Emissions Table -->
             <h2>Emissions Data</h2>
             <p:dataTable id="emissions-table" value="#{manageDataBean.emissions}" var="emission" editable="true">
-                <p:column headerText="Country">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText value="#{emission.country}" />
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText value="#{emission.country}" />
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column headerText="Year">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText value="#{emission.year}" />
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText value="#{emission.year}" />
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column headerText="CO2 Emissions (kt)">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText value="#{emission.emissionKt}" />
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText value="#{emission.emissionKt}" />
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column headerText="Data Source">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText value="#{emission.dataSource}" />
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText value="#{emission.dataSource}" />
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column headerText="Actions">
-                    <p:commandButton value="Delete" 
-                                     action="#{manageDataBean.delete(emission)}" 
-                                     update=":table-form:emissions-table :add-form:messages" />
-                </p:column>
-            </p:dataTable>
+			    <p:column headerText="Country">
+			        <p:cellEditor>
+			            <f:facet name="output">
+			                <h:outputText value="#{emission.country}" />
+			            </f:facet>
+			            <f:facet name="input">
+			                <p:inputText value="#{emission.country}" />
+			            </f:facet>
+			        </p:cellEditor>
+			    </p:column>
+			    
+			    <p:column headerText="Year">
+			        <p:cellEditor>
+			            <f:facet name="output">
+			                <h:outputText value="#{emission.year}" />
+			            </f:facet>
+			            <f:facet name="input">
+			                <p:inputText value="#{emission.year}" />
+			            </f:facet>
+			        </p:cellEditor>
+			    </p:column>
+			    
+			    <p:column headerText="CO2 Emissions (kt)">
+			        <p:cellEditor>
+			            <f:facet name="output">
+			                <h:outputText value="#{emission.emissionKt}" />
+			            </f:facet>
+			            <f:facet name="input">
+			                <p:inputText value="#{emission.emissionKt}" />
+			            </f:facet>
+			        </p:cellEditor>
+			    </p:column>
+			    
+			    <p:column headerText="Data Source">
+			        <p:cellEditor>
+			            <f:facet name="output">
+			                <h:outputText value="#{emission.dataSource}" />
+			            </f:facet>
+			            <f:facet name="input">
+			                <p:inputText value="#{emission.dataSource}" />
+			            </f:facet>
+			        </p:cellEditor>
+			    </p:column>
+			
+			    <!-- Edit and Save Buttons -->
+			    <p:column headerText="Actions">
+			        <p:commandButton value="Edit" oncomplete="PF('emissionsTableWidget').startEditingRow(this);" icon="pi pi-pencil" />
+			        <p:commandButton value="Save" action="#{manageDataBean.save(emission)}" update="emissions-table" icon="pi pi-check" />
+			        <p:commandButton value="Delete" action="#{manageDataBean.delete(emission)}" update="emissions-table" icon="pi pi-trash" />
+			    </p:column>
+			</p:dataTable>
         </h:form>
     </ui:define>
 </ui:composition>
