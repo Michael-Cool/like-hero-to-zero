@@ -23,26 +23,60 @@ public class ManageDataBean {
     }
 
     public void saveNewEmission() {
-        save(newEmission);
-        newEmission = new Co2Emission(); // Reset form
+        try {
+            System.out.println("DEBUG: Attempting to save new emission: " +
+                "Country=" + newEmission.getCountry() + 
+                ", Year=" + newEmission.getYear() + 
+                ", EmissionKt=" + newEmission.getEmissionKt() + 
+                ", DataSource=" + newEmission.getDataSource());
+
+            save(newEmission); // Persist or merge the emission
+            System.out.println("DEBUG: Emission saved successfully.");
+
+            newEmission = new Co2Emission(); // Reset form for new input
+        } catch (Exception e) {
+            System.err.println("ERROR: Failed to save new emission: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public List<Co2Emission> getEmissions() {
-        return entityManager.createQuery("SELECT e FROM Co2Emission e", Co2Emission.class).getResultList();
+        try {
+            return entityManager.createQuery("SELECT e FROM Co2Emission e", Co2Emission.class).getResultList();
+        } catch (Exception e) {
+            System.err.println("ERROR: Failed to fetch emissions: " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void save(Co2Emission emission) {
-        if (emission.getId() == 0) {
-            entityManager.persist(emission);
-        } else {
-            entityManager.merge(emission);
+        try {
+            if (emission.getId() == 0) {
+                System.out.println("DEBUG: Persisting new emission.");
+                entityManager.persist(emission);
+            } else {
+                System.out.println("DEBUG: Merging existing emission with ID=" + emission.getId());
+                entityManager.merge(emission);
+            }
+        } catch (Exception e) {
+            System.err.println("ERROR: Failed to save emission: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     public void delete(Co2Emission emission) {
-        Co2Emission toDelete = entityManager.find(Co2Emission.class, emission.getId());
-        if (toDelete != null) {
-            entityManager.remove(toDelete);
+        try {
+            Co2Emission toDelete = entityManager.find(Co2Emission.class, emission.getId());
+            if (toDelete != null) {
+                System.out.println("DEBUG: Deleting emission with ID=" + emission.getId());
+                entityManager.remove(toDelete);
+            } else {
+                System.err.println("ERROR: Emission not found for deletion.");
+            }
+        } catch (Exception e) {
+            System.err.println("ERROR: Failed to delete emission: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
