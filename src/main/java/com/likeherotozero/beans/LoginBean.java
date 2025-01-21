@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import java.io.Serializable;
 import javax.persistence.EntityManager;
 
-
 @Named
 @SessionScoped
 public class LoginBean implements Serializable {
@@ -74,7 +73,11 @@ public class LoginBean implements Serializable {
     }
 
     public boolean isScientist() {
-        return isLoggedIn() && "SCIENTIST".equals(loggedInUser.getRole());
+        return isLoggedIn() && loggedInUser.isScientist();
+    }
+
+    public boolean isModerator() {
+        return isLoggedIn() && loggedInUser.isModerator();
     }
     
     public boolean isNotLoggedIn() {

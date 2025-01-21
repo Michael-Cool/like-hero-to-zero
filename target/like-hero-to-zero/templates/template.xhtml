@@ -24,17 +24,18 @@
 			            <p:menuitem value="Impressum" outcome="/pages/impressum.xhtml" />
 			            <p:menuitem value="Kontakt" outcome="/pages/contact.xhtml" />
 			            <p:menuitem value="Über uns" outcome="/pages/about.xhtml" />
+			            <p:menuitem value="Login" outcome="/pages/login.xhtml" rendered="#{loginBean.isNotLoggedIn()}" />
 			
 			            <!-- Scientist-Only Links -->
 			            <p:submenu label="Backend" rendered="#{loginBean.isLoggedIn() and loginBean.isScientist()}">
-			                <p:menuitem value="Add Data" outcome="/secure/add-data.xhtml" />
 			                    <p:menuitem value="Scientist Dashboard" outcome="/secure/scientist-dashboard.xhtml" />
-			                <p:menuitem value="Manage Data" outcome="/secure/manage-data.xhtml" />
-			                <p:menuitem value="Moderation Dashboard" outcome="/secure/moderation-dashboard.xhtml" />
 			            </p:submenu>
+			            
+						<p:menuitem value="Moderation Dashboard"
+			            outcome="/secure/moderation-dashboard.xhtml"
+			            rendered="#{loginBean.isModerator()}" />
 			
-			            <!-- Login/Logout -->
-			            <p:menuitem value="Login" outcome="/pages/login.xhtml" rendered="#{loginBean.isNotLoggedIn()}" />
+			            <!-- Logout -->
 			            <p:menuitem value="Logout" action="#{loginBean.logout}" rendered="#{loginBean.isLoggedIn()}" />
 			        </p:menu>
 			    </h:form>

@@ -1,7 +1,6 @@
 com/likeherotozero/service/ModerationService.class
 com/likeherotozero/entity/HibernateTest.class
 com/likeherotozero/beans/ScientistDataBean.class
-com/likeherotozero/util/PersistenceManager.class
 com/likeherotozero/beans/PublicDataBean.class
 com/likeherotozero/beans/LoginBean.class
 com/likeherotozero/model/Co2Emission.class
@@ -17,3 +16,4 @@ com/likeherotozero/beans/IndexBean.class
 com/likeherotozero/model/PendingChange$Status.class
 com/likeherotozero/model/User.class
 com/likeherotozero/beans/ModerationBean.class
+com/likeherotozero/model/PendingChange$ChangeType.class

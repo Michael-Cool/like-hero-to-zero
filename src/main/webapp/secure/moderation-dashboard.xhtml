@@ -4,7 +4,7 @@
                  xmlns:p="http://primefaces.org/ui"
                  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:define name="content">
+    <ui:define name="content" rendered="#{loginBean.isModerator()}">
         <h1>Moderation Dashboard</h1>
 
         <h:form id="moderation-form">
@@ -26,14 +26,17 @@
                 <p:column headerText="Submitted By">
                     <h:outputText value="#{change.submittedBy}" />
                 </p:column>
-                <p:column headerText="Actions">
-                    <p:commandButton value="Approve" 
-                                     action="#{moderationBean.approveChange(change)}" 
-                                     update=":moderation-form:pending-table" />
-                    <p:commandButton value="Reject" 
-                                     action="#{moderationBean.rejectChange(change)}" 
-                                     update=":moderation-form:pending-table" />
-                </p:column>
+                <p:column headerText="Change Type">
+				    <h:outputText value="#{change.changeType}" />
+				</p:column>
+				<p:column headerText="Actions">
+				    <p:commandButton value="Approve"
+				                     action="#{moderationBean.approveChange(change)}"
+				                     update="pending-table" />
+				    <p:commandButton value="Reject"
+				                     action="#{moderationBean.rejectChange(change)}"
+				                     update="pending-table" />
+				</p:column>
             </p:dataTable>
         </h:form>
     </ui:define>

@@ -13,15 +13,10 @@ public class PersistenceProducer {
 
     private static final String PERSISTENCE_UNIT_NAME = "like_hero_to_zero";
 
-    private EntityManagerFactory entityManagerFactory;
+    private final EntityManagerFactory entityManagerFactory;
 
     public PersistenceProducer() {
         this.entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-    }
-
-    @Produces
-    public EntityManagerFactory produceEntityManagerFactory() {
-        return entityManagerFactory;
     }
 
     @Produces
@@ -31,8 +26,14 @@ public class PersistenceProducer {
     }
 
     public void closeEntityManager(@Disposes EntityManager entityManager) {
-        if (entityManager.isOpen()) {
+        if (entityManager != null && entityManager.isOpen()) {
             entityManager.close();
+        }
+    }
+    
+    public void closeEntityManagerFactory() {
+        if (entityManagerFactory != null && entityManagerFactory.isOpen()) {
+            entityManagerFactory.close();
         }
     }
 }

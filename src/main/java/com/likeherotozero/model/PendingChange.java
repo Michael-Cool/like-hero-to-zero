@@ -6,34 +6,38 @@ import javax.persistence.*;
 @Table(name = "pending_changes")
 public class PendingChange {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(nullable = false)
-    private String country;
-
-    @Column(nullable = false)
-    private int year;
-
-    @Column(name = "emission_kt", nullable = false)
-    private double emissionKt;
-
-    @Column(name = "data_source")
-    private String dataSource;
-
-    @Column(name = "submitted_by")
-    private String submittedBy;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Status status = Status.PENDING;
-
     public enum Status {
         PENDING, APPROVED, REJECTED
     }
 
-    // Getters and setters for all fields
+    public enum ChangeType {
+        INSERT, DELETE
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private String country;
+
+    private int year;
+
+    @Column(name = "emission_kt", nullable = false)
+    private float emissionKt = 0.0f; // Default value to avoid null issues
+
+    private String dataSource;
+
+    private String submittedBy;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @Enumerated(EnumType.STRING)
+    private ChangeType changeType;
+
+    private Integer affectedId;
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -58,11 +62,11 @@ public class PendingChange {
         this.year = year;
     }
 
-    public double getEmissionKt() {
+    public float getEmissionKt() {
         return emissionKt;
     }
 
-    public void setEmissionKt(double emissionKt) {
+    public void setEmissionKt(float emissionKt) {
         this.emissionKt = emissionKt;
     }
 
@@ -88,5 +92,21 @@ public class PendingChange {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public ChangeType getChangeType() {
+        return changeType;
+    }
+
+    public void setChangeType(ChangeType changeType) {
+        this.changeType = changeType;
+    }
+
+    public Integer getAffectedId() {
+        return affectedId;
+    }
+
+    public void setAffectedId(Integer affectedId) {
+        this.affectedId = affectedId;
     }
 }

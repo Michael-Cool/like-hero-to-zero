@@ -19,6 +19,10 @@ public class User {
     @Column(nullable = false)
     private String role;
 
+    // Constants for roles
+    public static final String ROLE_SCIENTIST = "SCIENTIST";
+    public static final String ROLE_MODERATOR = "MODERATOR";
+
     // Getters and Setters
     public int getId() {
         return id;
@@ -50,5 +54,14 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    // Role Check Methods
+    public boolean isScientist() {
+        return ROLE_SCIENTIST.equalsIgnoreCase(this.role);
+    }
+
+    public boolean isModerator() {
+        return ROLE_MODERATOR.equalsIgnoreCase(this.role);
     }
 }
