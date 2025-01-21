@@ -2,8 +2,7 @@
                  xmlns="http://www.w3.org/1999/xhtml"
                  xmlns:h="http://xmlns.jcp.org/jsf/html"
                  xmlns:p="http://primefaces.org/ui"
-                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                 xmlns:f="http://xmlns.jcp.org/jsf/core">
+                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:define name="content">
         <h1>Manage CO2 Emissions</h1>
 
@@ -30,41 +29,26 @@
                              update=":main-form:messages :main-form:emissions-table" />
 
             <h2>Emissions Data</h2>
-			<p:dataTable id="emissions-table" value="#{scientistDataBean.emissions}" var="emission" editable="true" editMode="row">
-			    <p:ajax event="rowEdit" listener="#{scientistDataBean.onRowEdit}" update=":main-form:messages :main-form:emissions-table" />
-			    
-			    <p:column headerText="Country">
-			        <p:cellEditor>
-			            <f:facet name="output"><h:outputText value="#{emission.country}" /></f:facet>
-			            <f:facet name="input"><p:inputText value="#{emission.country}" /></f:facet>
-			        </p:cellEditor>
-			    </p:column>
-			    <p:column headerText="Year">
-			        <p:cellEditor>
-			            <f:facet name="output"><h:outputText value="#{emission.year}" /></f:facet>
-			            <f:facet name="input"><p:inputText value="#{emission.year}" /></f:facet>
-			        </p:cellEditor>
-			    </p:column>
-			    <p:column headerText="CO2 Emissions (kt)">
-			        <p:cellEditor>
-			            <f:facet name="output"><h:outputText value="#{emission.emissionKt}" /></f:facet>
-			            <f:facet name="input"><p:inputText value="#{emission.emissionKt}" /></f:facet>
-			        </p:cellEditor>
-			    </p:column>
-			    <p:column headerText="Data Source">
-			        <p:cellEditor>
-			            <f:facet name="output"><h:outputText value="#{emission.dataSource}" /></f:facet>
-			            <f:facet name="input"><p:inputText value="#{emission.dataSource}" /></f:facet>
-			        </p:cellEditor>
-			    </p:column>
-			    <!-- Actions -->
-			    <p:column headerText="Actions">
-			        <p:rowEditor /> <!-- PrimeFaces row editor button -->
-			        <p:commandButton value="Delete" 
-			                         action="#{scientistDataBean.deleteEmission(emission)}" 
-			                         update=":main-form:messages :main-form:emissions-table" immediate="true"/>
-			    </p:column>
-			</p:dataTable>
+            <p:dataTable id="emissions-table" value="#{scientistDataBean.emissions}" var="emission">
+                <p:column headerText="Country">
+                    <h:outputText value="#{emission.country}" />
+                </p:column>
+                <p:column headerText="Year">
+                    <h:outputText value="#{emission.year}" />
+                </p:column>
+                <p:column headerText="CO2 Emissions (kt)">
+                    <h:outputText value="#{emission.emissionKt}" />
+                </p:column>
+                <p:column headerText="Data Source">
+                    <h:outputText value="#{emission.dataSource}" />
+                </p:column>
+                <!-- Actions -->
+                <p:column headerText="Actions">
+                    <p:commandButton value="Delete" 
+                                     action="#{scientistDataBean.deleteEmission(emission)}" 
+                                     update=":main-form:messages :main-form:emissions-table" immediate="true"/>
+                </p:column>
+            </p:dataTable>
         </h:form>
     </ui:define>
 </ui:composition>
