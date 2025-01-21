@@ -7,26 +7,38 @@
         <h1>Manage CO2 Emissions</h1>
 
         <h:form id="main-form">
-		    <p:messages id="messages" autoUpdate="true" />
-		    
-		    <h2>Add New Data for Moderation</h2>
-		    <p:panelGrid columns="2">
-		        <p:outputLabel for="country" value="Country" />
-		        <p:inputText id="country" value="#{manageDataBean.newPendingChange.country}" required="true" />
-		
-		        <p:outputLabel for="year" value="Year" />
-		        <p:inputText id="year" value="#{manageDataBean.newPendingChange.year}" required="true" />
-		
-		        <p:outputLabel for="emissionKt" value="CO2 Emissions (kt)" />
-		        <p:inputText id="emissionKt" value="#{manageDataBean.newPendingChange.emissionKt}" required="true" />
-		
-		        <p:outputLabel for="dataSource" value="Data Source" />
-		        <p:inputText id="dataSource" value="#{manageDataBean.newPendingChange.dataSource}" required="true" />
-		    </p:panelGrid>
-		
-		    <p:commandButton value="Submit for Moderation" 
-		                     action="#{manageDataBean.saveNewPendingChange}" 
-		                     update=":main-form:messages" />
-		</h:form>
+            <p:messages id="messages" autoUpdate="true" showDetail="true" showSummary="true" />
+
+            <h2>Add New Data for Moderation</h2>
+            <p:panelGrid columns="2">
+                <p:outputLabel for="country" value="Country" />
+                <p:inputText id="country" 
+                             value="#{manageDataBean.newPendingChange.country}" 
+                             required="true" 
+                             requiredMessage="Country is required." />
+
+                <p:outputLabel for="year" value="Year" />
+                <p:inputText id="year" 
+                             value="#{manageDataBean.newPendingChange.year}" 
+                             required="true" 
+                             requiredMessage="Year is required." />
+
+                <p:outputLabel for="emissionKt" value="CO2 Emissions (kt)" />
+                <p:inputText id="emissionKt" 
+                             value="#{manageDataBean.newPendingChange.emissionKt}" 
+                             required="true" 
+                             requiredMessage="CO2 Emissions are required." />
+
+                <p:outputLabel for="dataSource" value="Data Source" />
+                <p:inputText id="dataSource" 
+                             value="#{manageDataBean.newPendingChange.dataSource}" 
+                             required="true" 
+                             requiredMessage="Data Source is required." />
+            </p:panelGrid>
+
+            <p:commandButton value="Submit for Moderation" 
+                             action="#{manageDataBean.saveNewPendingChange}" 
+                             update=":main-form:messages" />
+        </h:form>
     </ui:define>
 </ui:composition>

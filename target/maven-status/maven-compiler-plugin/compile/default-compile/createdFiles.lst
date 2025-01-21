@@ -2,6 +2,7 @@ com/likeherotozero/service/ModerationService.class
 com/likeherotozero/entity/HibernateTest.class
 com/likeherotozero/beans/ScientistDataBean.class
 com/likeherotozero/beans/PublicDataBean.class
+com/likeherotozero/model/PendingChangeBuilder.class
 com/likeherotozero/beans/LoginBean.class
 com/likeherotozero/model/Co2Emission.class
 com/likeherotozero/config/PersistenceProducer.class

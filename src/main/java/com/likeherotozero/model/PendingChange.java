@@ -1,6 +1,7 @@
 package com.likeherotozero.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "pending_changes")
@@ -18,24 +19,43 @@ public class PendingChange {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotNull
+    @Column(name = "country", nullable = false)
     private String country;
 
+    @NotNull
+    @Column(name = "year", nullable = false)
     private int year;
 
+    @NotNull
     @Column(name = "emission_kt", nullable = false)
-    private float emissionKt = 0.0f; // Default value to avoid null issues
+    private double emissionKt;
 
+    @NotNull
+    @Column(name = "data_source", nullable = false)
     private String dataSource;
 
+    @NotNull
+    @Column(name = "submitted_by", nullable = false)
     private String submittedBy;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    @NotNull
+    @Column(name = "status", nullable = false)
+    private Status status = Status.PENDING; // Default to PENDING
 
     @Enumerated(EnumType.STRING)
-    private ChangeType changeType;
+    @NotNull
+    @Column(name = "change_type", nullable = false)
+    private ChangeType changeType = ChangeType.INSERT; // Default to INSERT
 
+    @Column(name = "affected_id")
     private Integer affectedId;
+
+    // Default constructor
+    public PendingChange() {
+        // Default values are already initialized above
+    }
 
     // Getters and Setters
     public int getId() {
@@ -62,11 +82,11 @@ public class PendingChange {
         this.year = year;
     }
 
-    public float getEmissionKt() {
+    public double getEmissionKt() {
         return emissionKt;
     }
 
-    public void setEmissionKt(float emissionKt) {
+    public void setEmissionKt(double emissionKt) {
         this.emissionKt = emissionKt;
     }
 

@@ -2,35 +2,51 @@ package com.likeherotozero.beans;
 
 import com.likeherotozero.model.PendingChange;
 import com.likeherotozero.service.ModerationService;
+import com.likeherotozero.service.UserService;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 
 @Named
-@RequestScoped
+@SessionScoped
 public class ManageDataBean implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    private PendingChange newPendingChange = new PendingChange();
+    private PendingChange newPendingChange;
 
     @Inject
     private ModerationService moderationService;
+
+    @Inject
+    private UserService userService; // Assuming you have a UserService to get the logged-in user
+
+    public ManageDataBean() {
+        resetNewPendingChange();
+    }
 
     public PendingChange getNewPendingChange() {
         return newPendingChange;
     }
 
+    public void setNewPendingChange(PendingChange newPendingChange) {
+        this.newPendingChange = newPendingChange;
+    }
+
     public void saveNewPendingChange() {
         try {
-            newPendingChange.setStatus(PendingChange.Status.PENDING); // Set status to PENDING
-            moderationService.savePendingChange(newPendingChange);   // Save to the pending_changes table
-            System.out.println("New change submitted for moderation: " + newPendingChange.getCountry());
-            newPendingChange = new PendingChange();                  // Reset the form
+            String currentUser = userService.getCurrentUsername(); // Fetch the logged-in user
+            newPendingChange.setSubmittedBy(currentUser); // Set the submittedBy field
+            newPendingChange.setChangeType(PendingChange.ChangeType.INSERT); // Set the changeType
+
+            moderationService.savePendingChange(newPendingChange); // Save to the database
+            resetNewPendingChange(); // Reset for new entry
         } catch (Exception e) {
-            System.err.println("Error submitting new data for moderation: " + e.getMessage());
-            e.printStackTrace();
+            throw new IllegalStateException("Error saving PendingChange: " + e.getMessage(), e);
         }
+    }
+
+    private void resetNewPendingChange() {
+        newPendingChange = new PendingChange();
+        newPendingChange.setStatus(PendingChange.Status.PENDING); // Default to PENDING
     }
 }
