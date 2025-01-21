@@ -42,17 +42,11 @@
                 <p:column headerText="Data Source">
                     <h:outputText value="#{emission.dataSource}" />
                 </p:column>
+                <!-- Actions -->
                 <p:column headerText="Actions">
-                    <p:commandButton value="Edit"
-                                     icon="ui-icon-pencil" 
-                                     action="#{scientistDataBean.editEmission(emission)}" 
-                                     update=":main-form:messages :main-form:emissions-table"
-                                     process="@this" />
-
                     <p:commandButton value="Delete" 
                                      action="#{scientistDataBean.deleteEmission(emission)}" 
-                                     update=":main-form:messages :main-form:emissions-table"
-                                     process="@this" />
+                                     update=":main-form:messages :main-form:emissions-table" immediate="true"/>
                 </p:column>
             </p:dataTable>
         </h:form>

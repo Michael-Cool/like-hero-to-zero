@@ -3,15 +3,15 @@ package com.likeherotozero.beans;
 import com.likeherotozero.model.Co2Emission;
 import com.likeherotozero.service.Co2EmissionService;
 
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 import javax.transaction.Transactional;
+import javax.faces.view.ViewScoped;
 
-@Named
-@RequestScoped
+@Named("scientistDataBean")
+@ViewScoped
 public class ScientistDataBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,14 +56,6 @@ public class ScientistDataBean implements Serializable {
             System.err.println("ERROR: Failed to save emission - " + e.getMessage());
             e.printStackTrace();
         }
-    }
-    
-    public void editEmission(Co2Emission emission) {
-        this.newEmission = emission;  // Set the newEmission to the one selected for editing
-        System.out.println("DEBUG: Editing emission - Country: " + emission.getCountry()
-                + ", Year: " + emission.getYear()
-                + ", EmissionKt: " + emission.getEmissionKt()
-                + ", DataSource: " + emission.getDataSource());
     }
 
     public void deleteEmission(Co2Emission emission) {
