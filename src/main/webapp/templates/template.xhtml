@@ -36,7 +36,7 @@
 			            rendered="#{loginBean.isModerator()}" />
 			
 			            <!-- Logout -->
-			            <p:menuitem value="Logout" action="#{loginBean.logout}" rendered="#{loginBean.isLoggedIn()}" />
+			            <p:menuitem value="Logout" action="#{loginBean.logout}" ajax="false" rendered="#{loginBean.isLoggedIn()}" />
 			        </p:menu>
 			    </h:form>
 			</div>

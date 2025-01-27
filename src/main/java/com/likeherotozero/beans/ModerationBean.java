@@ -4,6 +4,8 @@ import com.likeherotozero.model.PendingChange;
 import com.likeherotozero.service.ModerationService;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -22,10 +24,24 @@ public class ModerationBean implements Serializable {
     }
 
     public void approveChange(Integer changeId) {
-        moderationService.approveChange(changeId); // Directly pass the ID to the service
+        try {
+            moderationService.approveChange(changeId);
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Change approved successfully!", null));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error approving change: " + e.getMessage(), null));
+        }
     }
 
     public void rejectChange(Integer changeId) {
-        moderationService.rejectChange(changeId); // Pass the ID of the change
+        try {
+            moderationService.rejectChange(changeId);
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Change rejected successfully!", null));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error rejecting change: " + e.getMessage(), null));
+        }
     }
 }

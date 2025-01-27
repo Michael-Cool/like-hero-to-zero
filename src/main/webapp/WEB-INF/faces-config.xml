@@ -3,12 +3,15 @@
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd"
               version="2.3">
     <!-- Navigation Rules -->
-    
-	<navigation-rule>
-	    <from-view-id>/pages/login.xhtml</from-view-id>
-	    <navigation-case>
-	        <from-outcome>pages/index.xhtml</from-outcome>
-	        <to-view-id>/pages/index.xhtml</to-view-id>
-	    </navigation-case>
-	</navigation-rule>
+
+    <!-- Generic navigation case for index page -->
+    <navigation-rule>
+        <from-view-id>*</from-view-id> <!-- Matches any view -->
+        <navigation-case>
+            <from-outcome>/pages/index.xhtml</from-outcome>
+            <to-view-id>/pages/index.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+
 </faces-config>

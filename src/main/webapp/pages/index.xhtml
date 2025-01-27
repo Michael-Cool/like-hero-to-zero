@@ -6,6 +6,10 @@
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
+    
+		<p:growl id="logoutGrowl" life="5000" sticky="false" autoUpdate="true" styleClass="popup-message" />
+		<f:event listener="#{indexBean.checkLogout}" type="preRenderView" />
+
         <!-- Header -->
         <div class="header">
             <h1>Like Hero To Zero</h1>
@@ -23,8 +27,8 @@
             </p>
         </div>
 
-        <!-- Notification messages -->
-        <p:growl id="growl" showDetail="true" />
+        <!-- Notification for search -->
+        <p:growl id="searchGrowl" showDetail="true" />
 
         <!-- Form Section -->
         <div class="form-section">
@@ -38,7 +42,7 @@
                 <!-- Search Button -->
                 <p:commandButton value="Suchen" 
                                  action="#{indexBean.search}" 
-                                 update="results growl" 
+                                 update="results searchGrowl" 
                                  styleClass="search-button" />
             </h:form>
         </div>

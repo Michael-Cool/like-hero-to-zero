@@ -307,3 +307,41 @@ body {
     font-size: 1rem;
     color: #555;
 }
+
+/* Styles for the popup message */
+.popup-message {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    width: 300px;
+    background-color: #4caf50; /* Green for success */
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    padding: 10px;
+    text-align: center;
+    animation: fadeIn 0.5s, fadeOut 0.5s 4.5s;
+}
+
+/* Keyframes for fade-in and fade-out animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

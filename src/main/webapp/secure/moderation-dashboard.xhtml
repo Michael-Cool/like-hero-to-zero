@@ -32,10 +32,16 @@
 				<p:column headerText="Actions">
 				<p:commandButton value="Approve"
 				                 action="#{moderationBean.approveChange(change.id)}"
-				                 update="pending-table" />
+				                 update="pending-table"
+				                 onclick="PF('confirmDialog').show();" />
 				<p:commandButton value="Reject"
 				                 action="#{moderationBean.rejectChange(change.id)}"
-				                 update="pending-table" />
+				                 update="pending-table"
+				                 onclick="PF('confirmDialog').show();" />
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" message="Are you sure?">
+				    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+				    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+				</p:confirmDialog>
 				</p:column>
             </p:dataTable>
         </h:form>

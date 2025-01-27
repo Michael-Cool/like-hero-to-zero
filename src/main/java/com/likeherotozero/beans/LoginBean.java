@@ -4,6 +4,7 @@ import com.likeherotozero.model.User;
 
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import java.io.Serializable;
 import javax.persistence.EntityManager;
@@ -63,10 +64,11 @@ public class LoginBean implements Serializable {
 
     // Logout Logic
     public String logout() {
+        System.out.println("Logout triggered"); // Debug log
         loggedInUser = null; // Clear session
-        return "/login.xhtml?faces-redirect=true";
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        return "/pages/index.xhtml"; // Simple outcome
     }
-
     // Access Control Methods
     public boolean isLoggedIn() {
         return loggedInUser != null;
