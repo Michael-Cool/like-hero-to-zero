@@ -2,12 +2,15 @@ package com.likeherotozero.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "pending_changes")
-public class PendingChange {
+public class PendingChange implements Serializable {
 
-    public enum Status {
+    private static final long serialVersionUID = 1L;
+
+	public enum Status {
         PENDING, APPROVED, REJECTED
     }
 

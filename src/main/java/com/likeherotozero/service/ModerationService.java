@@ -5,23 +5,23 @@ import com.likeherotozero.model.PendingChange;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
 public class ModerationService {
 
-	@Inject
-	private EntityManager entityManager;
+    @Inject
+    private EntityManager entityManager;
 
-    @Transactional
     public void savePendingChange(PendingChange change) {
         try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(change);
-            entityManager.getTransaction().commit();
+            entityManager.getTransaction().begin(); // Start transaction
+            entityManager.persist(change); // Save the pending change
+            entityManager.getTransaction().commit(); // Commit transaction
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback(); // Rollback on failure
+            }
             System.err.println("Error saving PendingChange: " + e.getMessage());
             e.printStackTrace();
             throw new IllegalStateException("Error saving PendingChange: " + e.getMessage(), e);
@@ -30,30 +30,54 @@ public class ModerationService {
 
     public List<PendingChange> getAllPendingChanges() {
         return entityManager.createQuery(
-            "SELECT p FROM PendingChange p WHERE p.status = :status",
-            PendingChange.class
+                "SELECT p FROM PendingChange p WHERE p.status = :status",
+                PendingChange.class
         ).setParameter("status", PendingChange.Status.PENDING).getResultList();
     }
 
-    @Transactional
-    public void approveChange(PendingChange change2) {
-        PendingChange change = entityManager.find(PendingChange.class, change2);
-        if (change != null) {
-            change.setStatus(PendingChange.Status.APPROVED);
-            entityManager.merge(change);
-        } else {
-            throw new IllegalArgumentException("PendingChange with ID " + change2 + " not found.");
+    public void approveChange(Integer changeId) {
+        try {
+            entityManager.getTransaction().begin(); // Start transaction
+
+            PendingChange change = entityManager.find(PendingChange.class, changeId);
+            if (change == null) {
+                throw new IllegalArgumentException("PendingChange with ID " + changeId + " not found.");
+            }
+
+            change.setStatus(PendingChange.Status.APPROVED); // Update status
+            entityManager.merge(change); // Persist changes
+            entityManager.getTransaction().commit(); // Commit transaction
+
+            System.out.println("PendingChange with ID " + changeId + " approved and persisted.");
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback(); // Rollback on failure
+            }
+            System.err.println("Error approving PendingChange: " + e.getMessage());
+            throw new IllegalStateException("Failed to approve PendingChange: " + e.getMessage(), e);
         }
     }
 
-    @Transactional
-    public void rejectChange(PendingChange change2) {
-        PendingChange change = entityManager.find(PendingChange.class, change2);
-        if (change != null) {
-            change.setStatus(PendingChange.Status.REJECTED);
-            entityManager.merge(change);
-        } else {
-            throw new IllegalArgumentException("PendingChange with ID " + change2 + " not found.");
+    public void rejectChange(Integer changeId) {
+        try {
+            entityManager.getTransaction().begin(); // Start transaction
+
+            PendingChange change = entityManager.find(PendingChange.class, changeId);
+            if (change == null) {
+                throw new IllegalArgumentException("PendingChange with ID " + changeId + " not found.");
+            }
+
+            change.setStatus(PendingChange.Status.REJECTED); // Update status
+            entityManager.merge(change); // Persist changes
+            entityManager.getTransaction().commit(); // Commit transaction
+
+            System.out.println("PendingChange with ID " + changeId + " rejected and persisted.");
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback(); // Rollback on failure
+            }
+            System.err.println("Error rejecting PendingChange: " + e.getMessage());
+            throw new IllegalStateException("Failed to reject PendingChange: " + e.getMessage(), e);
         }
     }
 }

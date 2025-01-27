@@ -12,7 +12,9 @@ import java.io.Serializable;
 @Named
 @SessionScoped
 public class ManageDataBean implements Serializable {
-    private PendingChange newPendingChange;
+    private static final long serialVersionUID = 1L;
+
+	private PendingChange newPendingChange;
 
     @Inject
     private ModerationService moderationService;

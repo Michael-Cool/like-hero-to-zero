@@ -30,12 +30,12 @@
 				    <h:outputText value="#{change.changeType}" />
 				</p:column>
 				<p:column headerText="Actions">
-				    <p:commandButton value="Approve"
-				                     action="#{moderationBean.approveChange(change)}"
-				                     update="pending-table" />
-				    <p:commandButton value="Reject"
-				                     action="#{moderationBean.rejectChange(change)}"
-				                     update="pending-table" />
+				<p:commandButton value="Approve"
+				                 action="#{moderationBean.approveChange(change.id)}"
+				                 update="pending-table" />
+				<p:commandButton value="Reject"
+				                 action="#{moderationBean.rejectChange(change.id)}"
+				                 update="pending-table" />
 				</p:column>
             </p:dataTable>
         </h:form>

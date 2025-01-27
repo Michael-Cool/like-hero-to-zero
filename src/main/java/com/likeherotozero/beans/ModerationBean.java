@@ -21,11 +21,11 @@ public class ModerationBean implements Serializable {
         return moderationService.getAllPendingChanges();
     }
 
-    public void approveChange(PendingChange change) {
-        moderationService.approveChange(change);
+    public void approveChange(Integer changeId) {
+        moderationService.approveChange(changeId); // Directly pass the ID to the service
     }
 
-    public void rejectChange(PendingChange change) {
-        moderationService.rejectChange(change);
+    public void rejectChange(Integer changeId) {
+        moderationService.rejectChange(changeId); // Pass the ID of the change
     }
 }
