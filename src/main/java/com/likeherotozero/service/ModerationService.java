@@ -39,16 +39,28 @@ public class ModerationService {
         try {
             entityManager.getTransaction().begin(); // Start transaction
 
+            // Find the pending change by ID
             PendingChange change = entityManager.find(PendingChange.class, changeId);
             if (change == null) {
                 throw new IllegalArgumentException("PendingChange with ID " + changeId + " not found.");
             }
 
-            change.setStatus(PendingChange.Status.APPROVED); // Update status
-            entityManager.merge(change); // Persist changes
-            entityManager.getTransaction().commit(); // Commit transaction
+            // Update the status to APPROVED
+            change.setStatus(PendingChange.Status.APPROVED);
+            entityManager.merge(change); // Persist the change
 
-            System.out.println("PendingChange with ID " + changeId + " approved and persisted.");
+            // Insert the approved change into the co2_emissions table
+            String insertQuery = "INSERT INTO co2_emissions (country, year, emission_kt, data_source) " +
+                                 "VALUES (:country, :year, :emissionKt, :dataSource)";
+            entityManager.createNativeQuery(insertQuery)
+                         .setParameter("country", change.getCountry())
+                         .setParameter("year", change.getYear())
+                         .setParameter("emissionKt", change.getEmissionKt())
+                         .setParameter("dataSource", change.getDataSource())
+                         .executeUpdate();
+
+            entityManager.getTransaction().commit(); // Commit the transaction
+            System.out.println("PendingChange with ID " + changeId + " approved and persisted to co2_emissions.");
         } catch (Exception e) {
             if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback(); // Rollback on failure
