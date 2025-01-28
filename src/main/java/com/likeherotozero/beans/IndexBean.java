@@ -23,21 +23,20 @@ public class IndexBean {
     private Co2EmissionService emissionService;
 
     @PostConstruct
-    public void checkLogout() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        if (!facesContext.getExternalContext().getFlash().isEmpty()) {
-            facesContext.addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "You have successfully logged out!", null));
-        }
-    }
-    
     public void init() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
         try {
             // Fetch the list of distinct countries from the database
             countries = emissionService.getDistinctCountries();
             System.out.println("DEBUG: Countries loaded: " + countries);
+
+            // Check if a logout message needs to be displayed
+            if (!facesContext.getExternalContext().getFlash().isEmpty()) {
+                facesContext.addMessage(null, 
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "You have successfully logged out!", null));
+            }
         } catch (Exception e) {
-            System.err.println("ERROR: Failed to load countries: " + e.getMessage());
+            System.err.println("ERROR: Failed to initialize IndexBean: " + e.getMessage());
             e.printStackTrace();
         }
     }
