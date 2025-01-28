@@ -18,7 +18,7 @@ public class PendingChangeBuilder {
         return this;
     }
 
-    public PendingChangeBuilder withEmissionKt(float emissionKt) {
+    public PendingChangeBuilder withEmissionKt(double emissionKt) { // Changed to double
         pendingChange.setEmissionKt(emissionKt);
         return this;
     }
@@ -59,7 +59,7 @@ public class PendingChangeBuilder {
         if (pendingChange.getYear() <= 0) { // Assuming year > 0 is valid
             missingFields.append("year, ");
         }
-        if (pendingChange.getEmissionKt() == 0.0f) { // Assuming 0.0f is invalid
+        if (pendingChange.getEmissionKt() == 0.0) { // Assuming 0.0 is invalid
             missingFields.append("emissionKt, ");
         }
         if (pendingChange.getDataSource() == null || pendingChange.getDataSource().isEmpty()) {

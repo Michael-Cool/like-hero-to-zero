@@ -1,10 +1,14 @@
 package com.likeherotozero.beans;
 
+import com.likeherotozero.model.Co2Emission;
 import com.likeherotozero.model.PendingChange;
+import com.likeherotozero.service.Co2EmissionService;
 import com.likeherotozero.service.ModerationService;
 import com.likeherotozero.service.UserService;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -16,10 +20,13 @@ public class ManageDataBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private PendingChange newPendingChange;
-    private PendingChange selectedPendingChange; // For delete action
+    private Co2Emission selectedEmission; // Selected row for deletion
 
     @Inject
     private ModerationService moderationService;
+
+    @Inject
+    private Co2EmissionService emissionService;
 
     @Inject
     private UserService userService;
@@ -36,49 +43,48 @@ public class ManageDataBean implements Serializable {
         this.newPendingChange = newPendingChange;
     }
 
-    public PendingChange getSelectedPendingChange() {
-        return selectedPendingChange;
+    public Co2Emission getSelectedEmission() {
+        return selectedEmission;
     }
 
-    public void setSelectedPendingChange(PendingChange selectedPendingChange) {
-        this.selectedPendingChange = selectedPendingChange;
+    public void setSelectedEmission(Co2Emission selectedEmission) {
+        this.selectedEmission = selectedEmission;
     }
 
-    public void saveNewPendingChange() {
+    public List<Co2Emission> getAllEmissions() {
         try {
-            String currentUser = userService.getCurrentUsername();
-            newPendingChange.setSubmittedBy(currentUser);
-            newPendingChange.setChangeType(PendingChange.ChangeType.INSERT);
-
-            moderationService.savePendingChange(newPendingChange);
-            resetNewPendingChange();
+            return emissionService.findAll(); // Fetch data from the database
         } catch (Exception e) {
-            throw new IllegalStateException("Error saving PendingChange: " + e.getMessage(), e);
+            throw new IllegalStateException("Error retrieving emissions: " + e.getMessage(), e);
         }
     }
-
-    public void submitDeleteRequest() {
+    
+    public void requestDeletion(Co2Emission emission) {
         try {
-            if (selectedPendingChange == null) {
-                throw new IllegalArgumentException("No data selected for deletion.");
+            if (emission == null) {
+                throw new IllegalArgumentException("No emission data provided for deletion.");
             }
 
             String currentUser = userService.getCurrentUsername();
-            selectedPendingChange.setSubmittedBy(currentUser);
-            selectedPendingChange.setChangeType(PendingChange.ChangeType.DELETE);
-            selectedPendingChange.setStatus(PendingChange.Status.PENDING);
+            PendingChange deleteRequest = new PendingChange();
 
-            moderationService.savePendingChange(selectedPendingChange);
+            deleteRequest.setCountry(emission.getCountry());
+            deleteRequest.setYear(emission.getYear());
+            deleteRequest.setEmissionKt(emission.getEmissionKt());
+            deleteRequest.setDataSource(emission.getDataSource());
+            deleteRequest.setSubmittedBy(currentUser);
+            deleteRequest.setChangeType(PendingChange.ChangeType.DELETE);
+            deleteRequest.setStatus(PendingChange.Status.PENDING);
+            deleteRequest.setAffectedId(emission.getId()); // Set the ID of the Co2Emission row to be deleted
+
+            moderationService.savePendingChange(deleteRequest);
+
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Deletion request submitted for " + emission.getCountry(), null));
         } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error submitting deletion request: " + e.getMessage(), null));
             throw new IllegalStateException("Error submitting delete request: " + e.getMessage(), e);
-        }
-    }
-
-    public List<PendingChange> getPendingChanges() {
-        try {
-            return moderationService.getAllPendingChanges();
-        } catch (Exception e) {
-            throw new IllegalStateException("Error retrieving pending changes: " + e.getMessage(), e);
         }
     }
 

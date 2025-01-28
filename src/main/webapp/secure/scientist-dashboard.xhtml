@@ -7,10 +7,10 @@
     <ui:define name="content">
         <h1>Manage CO2 Emissions</h1>
 
+        <!-- Add Data Section -->
         <h:form id="main-form">
-            <p:messages id="messages" autoUpdate="true" showDetail="true" showSummary="true" />
+            <p:messages id="addMessages" autoUpdate="true" showDetail="true" showSummary="true" />
 
-            <!-- Add Data Section -->
             <h2>Add New Data for Moderation</h2>
             <p:panelGrid columns="2">
                 <p:outputLabel for="country" value="Country" />
@@ -28,38 +28,35 @@
 
             <p:commandButton value="Submit for Moderation" 
                              action="#{manageDataBean.saveNewPendingChange}" 
-                             update=":main-form:messages" />
+                             update=":main-form:addMessages" />
         </h:form>
 
         <!-- Delete Data Section -->
         <h2>Delete Existing Data</h2>
         <h:form id="delete-form">
-            <p:messages id="delete-messages" autoUpdate="true" showDetail="true" showSummary="true" />
-            
+            <p:messages id="deleteMessages" autoUpdate="true" />
+
             <p:dataTable id="dataTable" 
-                         value="#{manageDataBean.pendingChanges}" 
-                         var="data" 
-                         selection="#{manageDataBean.selectedPendingChange}" 
-                         rowKey="#{data.id}" 
-                         selectionMode="single">
+                         value="#{manageDataBean.allEmissions}" 
+                         var="emission">
                 <p:column headerText="Country">
-                    <h:outputText value="#{data.country}" />
+                    <h:outputText value="#{emission.country}" />
                 </p:column>
                 <p:column headerText="Year">
-                    <h:outputText value="#{data.year}" />
+                    <h:outputText value="#{emission.year}" />
                 </p:column>
                 <p:column headerText="CO2 Emissions (kt)">
-                    <h:outputText value="#{data.emissionKt}" />
+                    <h:outputText value="#{emission.emissionKt}" />
                 </p:column>
                 <p:column headerText="Data Source">
-                    <h:outputText value="#{data.dataSource}" />
+                    <h:outputText value="#{emission.dataSource}" />
+                </p:column>
+                <p:column headerText="Actions">
+                    <p:commandButton value="Request Deletion" 
+                                     action="#{manageDataBean.requestDeletion(emission)}" 
+                                     update="delete-form:deleteMessages dataTable" />
                 </p:column>
             </p:dataTable>
-
-            <p:commandButton value="Request Deletion" 
-                             action="#{manageDataBean.submitDeleteRequest}" 
-                             update=":delete-form:delete-messages" 
-                             disabled="#{manageDataBean.selectedPendingChange == null}" />
         </h:form>
     </ui:define>
 </ui:composition>

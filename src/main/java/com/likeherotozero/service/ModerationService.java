@@ -1,5 +1,6 @@
 package com.likeherotozero.service;
 
+import com.likeherotozero.model.Co2Emission;
 import com.likeherotozero.model.PendingChange;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -39,28 +40,36 @@ public class ModerationService {
         try {
             entityManager.getTransaction().begin(); // Start transaction
 
-            // Find the pending change by ID
             PendingChange change = entityManager.find(PendingChange.class, changeId);
             if (change == null) {
                 throw new IllegalArgumentException("PendingChange with ID " + changeId + " not found.");
             }
 
-            // Update the status to APPROVED
+            if (change.getChangeType() == PendingChange.ChangeType.INSERT) {
+                // Handle INSERT operation: Add new record to co2_emissions
+                Co2Emission newEmission = new Co2Emission();
+                newEmission.setCountry(change.getCountry());
+                newEmission.setYear(change.getYear());
+                newEmission.setEmissionKt((float) change.getEmissionKt());
+                newEmission.setDataSource(change.getDataSource());
+                entityManager.persist(newEmission);
+            } else if (change.getChangeType() == PendingChange.ChangeType.DELETE) {
+                // Handle DELETE operation: Remove record from co2_emissions
+                Co2Emission existingEmission = entityManager.find(Co2Emission.class, change.getAffectedId());
+
+                if (existingEmission != null) {
+                    entityManager.remove(existingEmission); // Delete the record
+                } else {
+                    throw new IllegalStateException("No matching Co2Emission found for deletion with ID: " + change.getAffectedId());
+                }
+            }
+
+            // Update the status of the pending change to APPROVED
             change.setStatus(PendingChange.Status.APPROVED);
-            entityManager.merge(change); // Persist the change
+            entityManager.merge(change);
 
-            // Insert the approved change into the co2_emissions table
-            String insertQuery = "INSERT INTO co2_emissions (country, year, emission_kt, data_source) " +
-                                 "VALUES (:country, :year, :emissionKt, :dataSource)";
-            entityManager.createNativeQuery(insertQuery)
-                         .setParameter("country", change.getCountry())
-                         .setParameter("year", change.getYear())
-                         .setParameter("emissionKt", change.getEmissionKt())
-                         .setParameter("dataSource", change.getDataSource())
-                         .executeUpdate();
-
-            entityManager.getTransaction().commit(); // Commit the transaction
-            System.out.println("PendingChange with ID " + changeId + " approved and persisted to co2_emissions.");
+            entityManager.getTransaction().commit(); // Commit transaction
+            System.out.println("PendingChange with ID " + changeId + " approved and processed.");
         } catch (Exception e) {
             if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback(); // Rollback on failure
