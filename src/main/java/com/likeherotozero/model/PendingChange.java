@@ -38,10 +38,6 @@ public class PendingChange implements Serializable {
     @Column(name = "data_source", nullable = false)
     private String dataSource;
 
-    @NotNull
-    @Column(name = "submitted_by", nullable = false)
-    private String submittedBy;
-
     @Enumerated(EnumType.STRING)
     @NotNull
     @Column(name = "status", nullable = false)
@@ -99,14 +95,6 @@ public class PendingChange implements Serializable {
 
     public void setDataSource(String dataSource) {
         this.dataSource = dataSource;
-    }
-
-    public String getSubmittedBy() {
-        return submittedBy;
-    }
-
-    public void setSubmittedBy(String submittedBy) {
-        this.submittedBy = submittedBy;
     }
 
     public Status getStatus() {

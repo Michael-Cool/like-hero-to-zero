@@ -4,7 +4,6 @@ import com.likeherotozero.model.Co2Emission;
 import com.likeherotozero.model.PendingChange;
 import com.likeherotozero.service.Co2EmissionService;
 import com.likeherotozero.service.ModerationService;
-import com.likeherotozero.service.UserService;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -29,7 +28,6 @@ public class ManageDataBean implements Serializable {
     private Co2EmissionService emissionService;
 
     @Inject
-    private UserService userService;
 
     public ManageDataBean() {
         resetNewPendingChange();
@@ -65,14 +63,12 @@ public class ManageDataBean implements Serializable {
                 throw new IllegalArgumentException("No emission data provided for deletion.");
             }
 
-            String currentUser = userService.getCurrentUsername();
             PendingChange deleteRequest = new PendingChange();
 
             deleteRequest.setCountry(emission.getCountry());
             deleteRequest.setYear(emission.getYear());
             deleteRequest.setEmissionKt(emission.getEmissionKt());
             deleteRequest.setDataSource(emission.getDataSource());
-            deleteRequest.setSubmittedBy(currentUser);
             deleteRequest.setChangeType(PendingChange.ChangeType.DELETE);
             deleteRequest.setStatus(PendingChange.Status.PENDING);
             deleteRequest.setAffectedId(emission.getId()); // Set the ID of the Co2Emission row to be deleted
@@ -90,9 +86,6 @@ public class ManageDataBean implements Serializable {
     
     public void saveNewPendingChange() {
         try {
-            // Fetch the currently logged-in user
-            String currentUser = userService.getCurrentUsername();
-            newPendingChange.setSubmittedBy(currentUser); // Set the user
             newPendingChange.setChangeType(PendingChange.ChangeType.INSERT); // Set type as INSERT
             newPendingChange.setStatus(PendingChange.Status.PENDING); // Default status as PENDING
 

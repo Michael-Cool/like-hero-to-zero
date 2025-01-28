@@ -28,11 +28,6 @@ public class PendingChangeBuilder {
         return this;
     }
 
-    public PendingChangeBuilder withSubmittedBy(String submittedBy) {
-        pendingChange.setSubmittedBy(submittedBy);
-        return this;
-    }
-
     public PendingChangeBuilder withStatus(PendingChange.Status status) {
         pendingChange.setStatus(status);
         return this;
@@ -64,9 +59,6 @@ public class PendingChangeBuilder {
         }
         if (pendingChange.getDataSource() == null || pendingChange.getDataSource().isEmpty()) {
             missingFields.append("dataSource, ");
-        }
-        if (pendingChange.getSubmittedBy() == null || pendingChange.getSubmittedBy().isEmpty()) {
-            missingFields.append("submittedBy, ");
         }
 
         if (missingFields.length() > 0) {
