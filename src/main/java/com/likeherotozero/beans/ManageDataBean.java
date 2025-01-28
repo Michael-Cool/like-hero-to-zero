@@ -100,7 +100,7 @@ public class ManageDataBean implements Serializable {
             resetNewPendingChange(); // Reset the form fields
 
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Data submitted for moderation successfully!", null));
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Your data will be checked!", null));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error submitting data: " + e.getMessage(), null));

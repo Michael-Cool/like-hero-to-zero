@@ -8,28 +8,28 @@
         <h1>Manage CO2 Emissions</h1>
 
         <!-- Add Data Section -->
-        <h:form id="main-form">
-            <p:messages id="addMessages" autoUpdate="true" showDetail="true" showSummary="true" />
-
-            <h2>Add New Data for Moderation</h2>
-            <p:panelGrid columns="2">
-                <p:outputLabel for="country" value="Country" />
-                <p:inputText id="country" value="#{manageDataBean.newPendingChange.country}" required="true" />
-
-                <p:outputLabel for="year" value="Year" />
-                <p:inputText id="year" value="#{manageDataBean.newPendingChange.year}" required="true" />
-
-                <p:outputLabel for="emissionKt" value="CO2 Emissions (kt)" />
-                <p:inputText id="emissionKt" value="#{manageDataBean.newPendingChange.emissionKt}" required="true" />
-
-                <p:outputLabel for="dataSource" value="Data Source" />
-                <p:inputText id="dataSource" value="#{manageDataBean.newPendingChange.dataSource}" required="true" />
-            </p:panelGrid>
-
-            <p:commandButton value="Submit for Moderation" 
-                             action="#{manageDataBean.saveNewPendingChange}" 
-                             update=":main-form:addMessages" />
-        </h:form>
+		<h:form id="main-form">
+		    <p:messages id="addMessages" autoUpdate="true"/>
+		
+		    <h2>Add New Data for Moderation</h2>
+		    <p:panelGrid columns="2">
+		        <p:outputLabel for="country" value="Country" />
+		        <p:inputText id="country" value="#{manageDataBean.newPendingChange.country}" required="true" />
+		
+		        <p:outputLabel for="year" value="Year" />
+		        <p:inputText id="year" value="#{manageDataBean.newPendingChange.year}" required="true" />
+		
+		        <p:outputLabel for="emissionKt" value="CO2 Emissions (kt)" />
+		        <p:inputText id="emissionKt" value="#{manageDataBean.newPendingChange.emissionKt}" required="true" />
+		
+		        <p:outputLabel for="dataSource" value="Data Source" />
+		        <p:inputText id="dataSource" value="#{manageDataBean.newPendingChange.dataSource}" required="true" />
+		    </p:panelGrid>
+		
+		    <p:commandButton value="Submit for Moderation" 
+		                     action="#{manageDataBean.saveNewPendingChange}" 
+		                     update="main-form addMessages" /> <!-- Refresh the form and messages -->
+		</h:form>
 
         <!-- Delete Data Section -->
         <h2>Delete Existing Data</h2>
