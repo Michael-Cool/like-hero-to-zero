@@ -5,9 +5,10 @@ import com.likeherotozero.model.Co2Emission;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 
@@ -24,20 +25,22 @@ public class IndexBean {
 
     @PostConstruct
     public void init() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
         try {
             // Fetch the list of distinct countries from the database
             countries = emissionService.getDistinctCountries();
             System.out.println("DEBUG: Countries loaded: " + countries);
-
-            // Check if a logout message needs to be displayed
-            if (!facesContext.getExternalContext().getFlash().isEmpty()) {
-                facesContext.addMessage(null, 
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "You have successfully logged out!", null));
-            }
         } catch (Exception e) {
             System.err.println("ERROR: Failed to initialize IndexBean: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    // Listener for preRenderView
+    public void checkLogout(ComponentSystemEvent event) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        if (!facesContext.getExternalContext().getFlash().isEmpty()) {
+            facesContext.addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "You have successfully logged out!", null));
         }
     }
 
