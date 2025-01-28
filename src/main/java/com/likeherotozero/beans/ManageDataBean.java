@@ -87,6 +87,26 @@ public class ManageDataBean implements Serializable {
             throw new IllegalStateException("Error submitting delete request: " + e.getMessage(), e);
         }
     }
+    
+    public void saveNewPendingChange() {
+        try {
+            // Fetch the currently logged-in user
+            String currentUser = userService.getCurrentUsername();
+            newPendingChange.setSubmittedBy(currentUser); // Set the user
+            newPendingChange.setChangeType(PendingChange.ChangeType.INSERT); // Set type as INSERT
+            newPendingChange.setStatus(PendingChange.Status.PENDING); // Default status as PENDING
+
+            moderationService.savePendingChange(newPendingChange); // Save to the database
+            resetNewPendingChange(); // Reset the form fields
+
+            FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Data submitted for moderation successfully!", null));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error submitting data: " + e.getMessage(), null));
+            throw new IllegalStateException("Error saving PendingChange: " + e.getMessage(), e);
+        }
+    }
 
     private void resetNewPendingChange() {
         newPendingChange = new PendingChange();
