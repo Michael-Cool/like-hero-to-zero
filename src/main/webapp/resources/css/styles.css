@@ -111,21 +111,27 @@ body {
     margin-bottom: 20px; /* Add more space between items */
 }
 
-/* Hover Effect for Menu Items */
-.sidebar-menu .ui-menuitem-link:hover {
-    background-color: #ddd;
-}
-
 /* Submenu Styling */
 .sidebar-menu .ui-submenu {
     background: transparent;
     border: none;
 }
 
-.sidebar-menu .ui-menuitem-link:hover {
-    background-color: #4CAF50 !important; /* Green hover background */
-    color: white !important; /* White text on hover */
-    text-decoration: none; /* Remove underline */
+/* Override PrimeFaces hover behavior */
+.sidebar-menu .ui-menuitem-link:hover,
+.sidebar-menu .ui-menuitem-link:focus {
+    background-color: #4CAF50 !important; /* Green hover */
+    color: white !important; /* White text */
+    border: none !important; /* Remove any unwanted border */
+    box-shadow: none !important; /* Remove any default blue shadow */
+    outline: none !important; /* Remove blue focus border */
+    background-image: none !important;
+}
+
+/* Fix extra box issue caused by PrimeFaces */
+.ui-menu.ui-widget .ui-menuitem-link.ui-corner-all {
+    border-radius: 0 !important; /* Remove rounded corners */
+    box-shadow: none !important; /* Remove any shadow effects */
 }
 
 /* Results Section */
