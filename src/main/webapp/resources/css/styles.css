@@ -60,14 +60,72 @@ body {
     margin-bottom: 10px;
 }
 
-.search-button {
-    width: 100%;
+.search-button.ui-button {
     background-color: #4CAF50 !important;
-    color: white;
-    font-size: 1em;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 10px !important;
+}
+
+/* Remove PrimeFaces default styles */
+.ui-button.ui-state-default {
+    background-color: #4CAF50 !important;
+    background-image: none !important;
+    border: none !important;
+    color: white !important;
+    text-shadow: none !important;
+}
+
+/* Ensure text is white */
+.ui-button .ui-button-text {
+    color: white !important;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-right: 1px solid #ddd;
+    min-height: 100vh;
+}
+
+/* Remove Box Effect from PrimeFaces Menu */
+.sidebar-menu {
+    background: transparent !important; /* Remove menu background */
+    border: none !important; /* Remove menu border */
+    box-shadow: none !important; /* Remove any shadow */
+    padding: 0 !important; /* Remove extra spacing */
+}
+
+/* Make Menu Items Fit Full Width */
+.sidebar-menu .ui-menuitem-link {
+    display: block;
+    width: 100%;
+    padding: 10px 25px;  /* Increased left padding */
+    font-size: 24px !important;
+    color: #333; /* Adjust color */
+    text-decoration: none;
+    border-radius: 0; /* Remove rounded corners */
+    margin-bottom: 20px; /* Add more space between items */
+}
+
+/* Hover Effect for Menu Items */
+.sidebar-menu .ui-menuitem-link:hover {
+    background-color: #ddd;
+}
+
+/* Submenu Styling */
+.sidebar-menu .ui-submenu {
+    background: transparent;
     border: none;
-    border-radius: 5px;
-    padding: 10px;
+}
+
+.sidebar-menu .ui-menuitem-link:hover {
+    background-color: #4CAF50 !important; /* Green hover background */
+    color: white !important; /* White text on hover */
+    text-decoration: none; /* Remove underline */
 }
 
 /* Results Section */
@@ -315,7 +373,7 @@ body {
     right: 10px;
     z-index: 1000;
     width: 300px;
-    background-color: #4caf50; /* Green for success */
+    background-color: #4caf50 !important; /* Green for success */
     color: white;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);

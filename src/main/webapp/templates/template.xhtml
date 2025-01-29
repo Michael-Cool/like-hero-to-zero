@@ -5,43 +5,39 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Like Hero To Zero</title>
-        <!-- Use JSF resource handling for styles -->
         <h:outputStylesheet name="css/styles.css" />
     </h:head>
     <h:body>
-        <div style="display: grid; grid-template-rows: auto 1fr; grid-template-columns: 200px 1fr; height: 100vh; gap: 10px;">
+        <div style="display: grid; grid-template-rows: auto 1fr; grid-template-columns: 250px 1fr; height: 100vh; gap: 10px;">
             <!-- Header -->
             <div style="grid-column: 1 / -1; background-color: #4CAF50; color: white; padding: 15px; text-align: center;">
                 <h1 style="margin: 0;">Like Hero To Zero</h1>
             </div>
 
-            <!-- Sidebar -->
-			<div style="background-color: #f9f9f9; padding: 10px; border-right: 1px solid #ddd;">
+			<!-- Sidebar -->
+			<div class="sidebar">
 			    <h:form>
-			        <p:menu>
-			            <!-- Public Links -->
+			        <p:menu styleClass="sidebar-menu">
 			            <p:menuitem value="Home" outcome="/pages/index.xhtml" />
 			            <p:menuitem value="Impressum" outcome="/pages/impressum.xhtml" />
 			            <p:menuitem value="Kontakt" outcome="/pages/contact.xhtml" />
 			            <p:menuitem value="Über uns" outcome="/pages/about.xhtml" />
 			            <p:menuitem value="Login" outcome="/pages/login.xhtml" rendered="#{loginBean.isNotLoggedIn()}" />
 			
-			            <!-- Scientist-Only Links -->
 			            <p:submenu label="Backend" rendered="#{loginBean.isLoggedIn() and loginBean.isScientist()}">
-			                    <p:menuitem value="Scientist Dashboard" outcome="/secure/scientist-dashboard.xhtml" />
+			                <p:menuitem value="Scientist Dashboard" outcome="/secure/scientist-dashboard.xhtml" />
 			            </p:submenu>
-			            
-						<p:menuitem value="Moderation Dashboard"
-			            outcome="/secure/moderation-dashboard.xhtml"
-			            rendered="#{loginBean.isModerator()}" />
 			
-			            <!-- Logout -->
+			            <p:menuitem value="Moderation Dashboard"
+			                        outcome="/secure/moderation-dashboard.xhtml"
+			                        rendered="#{loginBean.isModerator()}" />
+			
 			            <p:menuitem value="Logout" action="#{loginBean.logout}" ajax="false" rendered="#{loginBean.isLoggedIn()}" />
 			        </p:menu>
 			    </h:form>
 			</div>
 
-            <!-- Content -->
+            <!-- Content Section -->
             <div style="padding: 20px;">
                 <ui:insert name="content" />
             </div>
