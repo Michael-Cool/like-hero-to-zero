@@ -38,6 +38,42 @@ body {
     margin-top: 0;
 }
 
+/* App Layout */
+.app-grid-layout {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 250px 1fr;
+    height: 100vh;
+}
+
+/* App Header */
+.app-header {
+    grid-column: 1 / -1;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+.app-header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+/* Section Title */
+.section-title {
+    background-color: #E8F5E9; /* Light green background */
+    color: #2E7D32; /* Dark green text */
+    text-align: center;
+    padding: 15px 20px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    border-radius: 15px;
+    width: 40%; /* Adjust width */
+    margin: 20px auto; /* Center horizontally */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+}
+
 /* Form Section */
 .form-section {
 	display: flex;
@@ -228,8 +264,18 @@ body {
     transition: background-color 0.3s;
 }
 
+.password-field {
+    margin-left: 40px;
+}
+
 .form-actions p:commandButton:hover {
     background-color: #45a049;
+}
+
+/* Adjust Space for Login Button Icon */
+.ui-button .ui-button-icon-left {
+    margin-right: 8px !important; /* Increase space between icon and text */
+    height: 1.4em !important; /* Ensure proper height */
 }
 
 .login-links {
@@ -277,7 +323,7 @@ body {
     margin-bottom: 20px;
 }
 
-.impressum-section h2 {
+h2 {
     font-size: 24px;
     margin-bottom: 10px;
     color: #4CAF50;
@@ -316,11 +362,6 @@ body {
     margin-bottom: 30px;
 }
 
-.contact-details h2 {
-    font-size: 1.5rem;
-    color: #444;
-}
-
 .contact-details p {
     font-size: 1rem;
     color: #555;
@@ -355,14 +396,6 @@ body {
 .about-team,
 .about-thanks {
     margin-bottom: 30px;
-}
-
-.about-mission h2,
-.about-team h2,
-.about-thanks h2 {
-    font-size: 1.5rem;
-    color: #444;
-    margin-bottom: 10px;
 }
 
 .about-mission p,

@@ -6,7 +6,7 @@
     <ui:define name="content">
     
             <!-- Notification messages -->
-        <p:growl id="growl" showDetail="true" />
+        <p:growl id="growl" showDetail="true"/>
     
         <!-- Login Section -->
         <div class="login-container">
@@ -16,15 +16,15 @@
             <h:form id="login-form" class="login-form">
                 <!-- Username -->
                 <div class="form-field">
-                    <p:outputLabel for="username" value="Benutzername" />
-                    <p:inputText id="username" value="#{loginBean.username}" placeholder="Geben Sie Ihren Benutzernamen ein" />
+                    <p:outputLabel for="username" value="Benutzername " />
+                    <p:inputText id="username" value="#{loginBean.username}" placeholder="Benutzername" />
                 </div>
 
                 <!-- Password -->
-                <div class="form-field">
-                    <p:outputLabel for="password" value="Passwort" />
-                    <p:password id="password" value="#{loginBean.password}" placeholder="Geben Sie Ihr Passwort ein" />
-                </div>
+				<div class="form-field password-field"> 
+				    <p:outputLabel for="password" value="Passwort " />
+				    <p:password id="password" value="#{loginBean.password}" placeholder="Passwort" />
+				</div>
 
                 <!-- Login Button -->
                 <div class="form-actions">
