@@ -45,7 +45,6 @@
 
         <!-- Search Results Section -->
         <h:panelGroup id="results" layout="block" class="results-section">
-            <h2>Suchergebnisse</h2>
             <p:dataTable value="#{indexBean.searchResults}" var="result" emptyMessage="Bitte wählen Sie ein Land aus." styleClass="results-table">
                 <p:column headerText="Land">
                     <h:outputText value="#{result.country}" />
