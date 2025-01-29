@@ -23,14 +23,11 @@
 			            <p:menuitem value="Kontakt" outcome="/pages/contact.xhtml" />
 			            <p:menuitem value="Über uns" outcome="/pages/about.xhtml" />
 			            <p:menuitem value="Login" outcome="/pages/login.xhtml" rendered="#{loginBean.isNotLoggedIn()}" />
-			
 						<p:menuitem value="Daten bearbeiten" outcome="/secure/scientist-dashboard.xhtml"
 						            rendered="#{loginBean.isLoggedIn() and loginBean.isScientist()}" />
-			
 			            <p:menuitem value="Daten bearbeiten"
 			                        outcome="/secure/moderation-dashboard.xhtml"
 			                        rendered="#{loginBean.isModerator()}" />
-			
 			            <p:menuitem value="Logout" action="#{loginBean.logout}" ajax="false" rendered="#{loginBean.isLoggedIn()}" />
 			        </p:menu>
 			    </h:form>

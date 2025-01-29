@@ -4,59 +4,62 @@
                  xmlns:p="http://primefaces.org/ui"
                  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <ui:define name="content">
-        <h1>Manage CO2 Emissions</h1>
-
-        <!-- Add Data Section -->
-		<h:form id="main-form">
-		    <p:messages id="addMessages" autoUpdate="true"/>
-		
-		    <h2>Add New Data for Moderation</h2>
-		    <p:panelGrid columns="2">
-		        <p:outputLabel for="country" value="Country" />
-		        <p:inputText id="country" value="#{manageDataBean.newPendingChange.country}" required="true" />
-		
-		        <p:outputLabel for="year" value="Year" />
-		        <p:inputText id="year" value="#{manageDataBean.newPendingChange.year}" required="true" />
-		
-		        <p:outputLabel for="emissionKt" value="CO2 Emissions (kt)" />
-		        <p:inputText id="emissionKt" value="#{manageDataBean.newPendingChange.emissionKt}" required="true" />
-		
-		        <p:outputLabel for="dataSource" value="Data Source" />
-		        <p:inputText id="dataSource" value="#{manageDataBean.newPendingChange.dataSource}" required="true" />
-		    </p:panelGrid>
-		
-		    <p:commandButton value="Submit for Moderation" 
-		                     action="#{manageDataBean.saveNewPendingChange}" 
-		                     update="main-form addMessages" /> <!-- Refresh the form and messages -->
-		</h:form>
-
-        <!-- Delete Data Section -->
-        <h2>Delete Existing Data</h2>
-        <h:form id="delete-form">
-            <p:messages id="deleteMessages" autoUpdate="true" />
-
-            <p:dataTable id="dataTable" 
-                         value="#{manageDataBean.allEmissions}" 
-                         var="emission">
-                <p:column headerText="Country">
-                    <h:outputText value="#{emission.country}" />
-                </p:column>
-                <p:column headerText="Year">
-                    <h:outputText value="#{emission.year}" />
-                </p:column>
-                <p:column headerText="CO2 Emissions (kt)">
-                    <h:outputText value="#{emission.emissionKt}" />
-                </p:column>
-                <p:column headerText="Data Source">
-                    <h:outputText value="#{emission.dataSource}" />
-                </p:column>
-                <p:column headerText="Actions">
-                    <p:commandButton value="Request Deletion" 
-                                     action="#{manageDataBean.requestDeletion(emission)}" 
-                                     update="delete-form:deleteMessages dataTable" />
-                </p:column>
-            </p:dataTable>
-        </h:form>
-    </ui:define>
+	<ui:define name="content">
+	    <div class="centered-content">
+	        <h1>Manage CO2 Emissions</h1>
+	
+	        <!-- Add Data Section -->
+	        <h:form id="main-form">
+	            <p:messages id="addMessages" autoUpdate="true"/>
+	
+	            <h2>Neue Daten hinzufügen</h2>
+	            <p:panelGrid columns="2">
+	                <p:outputLabel for="country" value="Country" />
+	                <p:inputText id="country" value="#{manageDataBean.newPendingChange.country}" required="true" />
+	
+	                <p:outputLabel for="year" value="Year" />
+	                <p:inputText id="year" value="#{manageDataBean.newPendingChange.year}" required="true" />
+	
+	                <p:outputLabel for="emissionKt" value="CO2 Emissions (kt)" />
+	                <p:inputText id="emissionKt" value="#{manageDataBean.newPendingChange.emissionKt}" required="true" />
+	
+	                <p:outputLabel for="dataSource" value="Data Source" />
+	                <p:inputText id="dataSource" value="#{manageDataBean.newPendingChange.dataSource}" required="true" />
+	            </p:panelGrid>
+	
+				<p:commandButton value="Submit for Moderation" 
+				                 action="#{manageDataBean.saveNewPendingChange}" 
+				                 update="main-form addMessages" 
+				                 styleClass="submit-button" />
+	        </h:form>
+	
+	        <!-- Delete Data Section -->
+	        <h2>Daten löschen</h2>
+	        <h:form id="delete-form">
+	            <p:messages id="deleteMessages" autoUpdate="true" />
+	
+	            <p:dataTable id="dataTable" 
+	                         value="#{manageDataBean.allEmissions}" 
+	                         var="emission">
+	                <p:column headerText="Country">
+	                    <h:outputText value="#{emission.country}" />
+	                </p:column>
+	                <p:column headerText="Year">
+	                    <h:outputText value="#{emission.year}" />
+	                </p:column>
+	                <p:column headerText="CO2 Emissions (kt)">
+	                    <h:outputText value="#{emission.emissionKt}" />
+	                </p:column>
+	                <p:column headerText="Data Source">
+	                    <h:outputText value="#{emission.dataSource}" />
+	                </p:column>
+	                <p:column headerText="Actions">
+	                    <p:commandButton value="Löschen" 
+	                                     action="#{manageDataBean.requestDeletion(emission)}" 
+	                                     update="delete-form:deleteMessages dataTable" />
+	                </p:column>
+	            </p:dataTable>
+	        </h:form>
+	    </div>
+	</ui:define>
 </ui:composition>
