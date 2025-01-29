@@ -53,14 +53,14 @@ public class ManageDataBean implements Serializable {
         try {
             return emissionService.findAll(); // Fetch data from the database
         } catch (Exception e) {
-            throw new IllegalStateException("Error retrieving emissions: " + e.getMessage(), e);
+            throw new IllegalStateException("Fehler beim Abruf der Daten " + e.getMessage(), e);
         }
     }
     
     public void requestDeletion(Co2Emission emission) {
         try {
             if (emission == null) {
-                throw new IllegalArgumentException("No emission data provided for deletion.");
+                throw new IllegalArgumentException("Keine Daten verfügbar.");
             }
 
             PendingChange deleteRequest = new PendingChange();
@@ -71,16 +71,16 @@ public class ManageDataBean implements Serializable {
             deleteRequest.setDataSource(emission.getDataSource());
             deleteRequest.setChangeType(PendingChange.ChangeType.DELETE);
             deleteRequest.setStatus(PendingChange.Status.PENDING);
-            deleteRequest.setAffectedId(emission.getId()); // Set the ID of the Co2Emission row to be deleted
+            deleteRequest.setAffectedId(emission.getId());
 
             moderationService.savePendingChange(deleteRequest);
 
             FacesContext.getCurrentInstance().addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Deletion request submitted for " + emission.getCountry(), null));
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Ihr Auftrag zur Löschung der Daten von " + emission.getCountry() + " wird nun überprüft", null));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error submitting deletion request: " + e.getMessage(), null));
-            throw new IllegalStateException("Error submitting delete request: " + e.getMessage(), e);
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler beim Übertragen der Daten: " + e.getMessage(), null));
+            throw new IllegalStateException("Fehler beim Übertragen der Daten: " + e.getMessage(), e);
         }
     }
     
@@ -93,11 +93,11 @@ public class ManageDataBean implements Serializable {
             resetNewPendingChange(); // Reset the form fields
 
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Your data will be checked!", null));
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Ihre Daten werden nun überprüft!", null));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error submitting data: " + e.getMessage(), null));
-            throw new IllegalStateException("Error saving PendingChange: " + e.getMessage(), e);
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler beim Übertragen der Daten: " + e.getMessage(), null));
+            throw new IllegalStateException("Fehler beim Übertragen der Daten: " + e.getMessage(), e);
         }
     }
 

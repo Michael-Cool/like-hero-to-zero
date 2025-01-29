@@ -6,7 +6,7 @@
 
 	<ui:define name="content">
 	    <div class="centered-content">
-	        <h1>Manage CO2 Emissions</h1>
+	        <h1>Emissionswerte anpassen</h1>
 	
 	        <!-- Add Data Section -->
 	        <h:form id="main-form">
@@ -27,7 +27,7 @@
 	                <p:inputText id="dataSource" value="#{manageDataBean.newPendingChange.dataSource}" required="true" />
 	            </p:panelGrid>
 	
-				<p:commandButton value="Submit for Moderation" 
+				<p:commandButton value="Daten einreichen" 
 				                 action="#{manageDataBean.saveNewPendingChange}" 
 				                 update="main-form addMessages" 
 				                 styleClass="submit-button" />
