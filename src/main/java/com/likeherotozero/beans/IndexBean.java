@@ -11,13 +11,14 @@ import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
+import java.util.Comparator;
 
 @Named
 @RequestScoped
 public class IndexBean {
 
     private String country;
-    private List<String> countries; // List of available countries
+    private List<String> countries;
     private List<Co2Emission> searchResults;
 
     @Inject
@@ -26,7 +27,6 @@ public class IndexBean {
     @PostConstruct
     public void init() {
         try {
-            // Fetch the list of distinct countries from the database
             countries = emissionService.getDistinctCountries();
             System.out.println("DEBUG: Countries loaded: " + countries);
         } catch (Exception e) {
@@ -35,7 +35,6 @@ public class IndexBean {
         }
     }
 
-    // Listener for preRenderView
     public void checkLogout(ComponentSystemEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         if (!facesContext.getExternalContext().getFlash().isEmpty()) {
@@ -66,6 +65,7 @@ public class IndexBean {
         try {
             searchResults = emissionService.getEmissionsByCountry(country);
             if (searchResults != null) {
+                searchResults.sort(Comparator.comparing(Co2Emission::getYear).reversed()); // Sort by year (descending)
                 System.out.println("DEBUG: Number of results fetched: " + searchResults.size());
             } else {
                 System.out.println("DEBUG: No results found for country: " + country);
