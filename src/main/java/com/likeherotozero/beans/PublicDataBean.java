@@ -9,14 +9,13 @@ import com.likeherotozero.model.Co2Emission;
 
 import java.util.List;
 
-@Named // Marks this as a JSF-managed bean
-@RequestScoped // Bean lifecycle lasts for a single HTTP request
+@Named
+@RequestScoped
 public class PublicDataBean {
 
-    @PersistenceContext // Injects the JPA EntityManager
+    @PersistenceContext
     private EntityManager entityManager;
 
-    // Retrieves the latest emissions data
     public List<Co2Emission> getLatestEmissions() {
         return entityManager.createQuery(
             "SELECT e FROM Co2Emission e ORDER BY e.year DESC", 

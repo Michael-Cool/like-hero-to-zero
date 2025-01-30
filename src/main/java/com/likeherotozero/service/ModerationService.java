@@ -16,16 +16,16 @@ public class ModerationService {
 
     public void savePendingChange(PendingChange change) {
         try {
-            entityManager.getTransaction().begin(); // Start transaction
-            entityManager.persist(change); // Save the pending change
-            entityManager.getTransaction().commit(); // Commit transaction
+            entityManager.getTransaction().begin();
+            entityManager.persist(change);
+            entityManager.getTransaction().commit();
         } catch (Exception e) {
             if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback(); // Rollback on failure
+                entityManager.getTransaction().rollback();
             }
-            System.err.println("Error saving PendingChange: " + e.getMessage());
+            System.err.println("Fehler beim Speichern: " + e.getMessage());
             e.printStackTrace();
-            throw new IllegalStateException("Error saving PendingChange: " + e.getMessage(), e);
+            throw new IllegalStateException("Fehler beim Speichern: " + e.getMessage(), e);
         }
     }
 
@@ -38,7 +38,7 @@ public class ModerationService {
 
     public void approveChange(Integer changeId) {
         try {
-            entityManager.getTransaction().begin(); // Start transaction
+            entityManager.getTransaction().begin();
 
             PendingChange change = entityManager.find(PendingChange.class, changeId);
             if (change == null) {
@@ -46,7 +46,6 @@ public class ModerationService {
             }
 
             if (change.getChangeType() == PendingChange.ChangeType.INSERT) {
-                // Handle INSERT operation: Add new record to co2_emissions
                 Co2Emission newEmission = new Co2Emission();
                 newEmission.setCountry(change.getCountry());
                 newEmission.setYear(change.getYear());
@@ -54,48 +53,46 @@ public class ModerationService {
                 newEmission.setDataSource(change.getDataSource());
                 entityManager.persist(newEmission);
             } else if (change.getChangeType() == PendingChange.ChangeType.DELETE) {
-                // Handle DELETE operation: Remove record from co2_emissions
                 Co2Emission existingEmission = entityManager.find(Co2Emission.class, change.getAffectedId());
 
                 if (existingEmission != null) {
-                    entityManager.remove(existingEmission); // Delete the record
+                    entityManager.remove(existingEmission);
                 } else {
-                    throw new IllegalStateException("No matching Co2Emission found for deletion with ID: " + change.getAffectedId());
+                    throw new IllegalStateException("Keine passende ID gefunden: " + change.getAffectedId());
                 }
             }
 
-            // Update the status of the pending change to APPROVED
             change.setStatus(PendingChange.Status.APPROVED);
             entityManager.merge(change);
 
-            entityManager.getTransaction().commit(); // Commit transaction
-            System.out.println("PendingChange with ID " + changeId + " approved and processed.");
+            entityManager.getTransaction().commit();
+            System.out.println("Änderung mit ID " + changeId + " angenommen.");
         } catch (Exception e) {
             if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback(); // Rollback on failure
+                entityManager.getTransaction().rollback();
             }
-            System.err.println("Error approving PendingChange: " + e.getMessage());
-            throw new IllegalStateException("Failed to approve PendingChange: " + e.getMessage(), e);
+            System.err.println("Fehler bei der Bestätigung: " + e.getMessage());
+            throw new IllegalStateException("Fehler bei der Bestätigung: " + e.getMessage(), e);
         }
     }
 
     public void rejectChange(Integer changeId) {
         try {
-            entityManager.getTransaction().begin(); // Start transaction
+            entityManager.getTransaction().begin();
 
             PendingChange change = entityManager.find(PendingChange.class, changeId);
             if (change == null) {
-                throw new IllegalArgumentException("PendingChange with ID " + changeId + " not found.");
+                throw new IllegalArgumentException("Änderung mit ID " + changeId + " nicht gefunden.");
             }
 
-            change.setStatus(PendingChange.Status.REJECTED); // Update status
-            entityManager.merge(change); // Persist changes
-            entityManager.getTransaction().commit(); // Commit transaction
+            change.setStatus(PendingChange.Status.REJECTED);
+            entityManager.merge(change);
+            entityManager.getTransaction().commit();
 
-            System.out.println("PendingChange with ID " + changeId + " rejected and persisted.");
+            System.out.println("Änderung mit ID " + changeId + " abgewiesen.");
         } catch (Exception e) {
             if (entityManager.getTransaction().isActive()) {
-                entityManager.getTransaction().rollback(); // Rollback on failure
+                entityManager.getTransaction().rollback();
             }
             System.err.println("Error rejecting PendingChange: " + e.getMessage());
             throw new IllegalStateException("Failed to reject PendingChange: " + e.getMessage(), e);

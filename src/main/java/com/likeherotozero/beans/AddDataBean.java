@@ -20,7 +20,6 @@ public class AddDataBean {
     @Inject
     private EntityManager entityManager;
 
-    // Getters and setters
     public String getCountry() {
         return country;
     }
@@ -53,7 +52,6 @@ public class AddDataBean {
         this.dataSource = dataSource;
     }
 
-    // Add data to database
     @Transactional
     public void addData() {
         try {
@@ -64,9 +62,9 @@ public class AddDataBean {
             emission.setDataSource(dataSource);
 
             entityManager.persist(emission);
-            System.out.println("Data added successfully.");
+            System.out.println("Daten erfolgreich hinzugefügt.");
         } catch (Exception e) {
-            System.err.println("Error while adding data: " + e.getMessage());
+            System.err.println("Fehler beim hinzufügen der Daten: " + e.getMessage());
             e.printStackTrace();
         }
     }

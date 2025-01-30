@@ -36,35 +36,23 @@ public class ScientistDataBean implements Serializable {
     @Transactional
     public void saveEmission() {
         try {
-            System.out.println("DEBUG: Saving emission - Country: " + newEmission.getCountry()
-                    + ", Year: " + newEmission.getYear()
-                    + ", EmissionKt: " + newEmission.getEmissionKt()
-                    + ", DataSource: " + newEmission.getDataSource());
-            
             if (newEmission.getId() == 0) {
-                // If it's a new emission (no ID), create it
                 emissionService.save(newEmission);
-                System.out.println("DEBUG: New emission saved successfully.");
             } else {
-                // If it's an existing emission, update it
                 emissionService.save(newEmission);
-                System.out.println("DEBUG: Emission updated successfully.");
             }
             
-            newEmission = new Co2Emission();  // Clear the form after saving
+            newEmission = new Co2Emission();
         } catch (Exception e) {
-            System.err.println("ERROR: Failed to save emission - " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     public void deleteEmission(Co2Emission emission) {
         try {
-            System.out.println("DEBUG: Attempting to delete emission with ID: " + emission.getId());
             emissionService.delete(emission);
-            System.out.println("DEBUG: Emission deleted successfully.");
         } catch (Exception e) {
-            System.err.println("ERROR: Failed to delete emission - " + e.getMessage());
+            System.err.println("ERROR: Fehler beim Löschen - " + e.getMessage());
             e.printStackTrace();
         }
     }

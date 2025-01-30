@@ -12,15 +12,12 @@ public class ExampleEntity {
     @Column(name = "data")
     private String data;
 
-    // Default constructor (required by JPA)
     public ExampleEntity() {}
 
-    // Constructor with parameters
     public ExampleEntity(String data) {
         this.data = data;
     }
 
-    // Getters and Setters
     public int getId() {
         return id;
     }

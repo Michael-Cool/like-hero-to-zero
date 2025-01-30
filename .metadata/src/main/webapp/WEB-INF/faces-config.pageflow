@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf17361580089020" configfile="/like-hero-to-zero/src/main/webapp/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf17361580089020" configfile="/like-hero-to-zero/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="178" id="pf17382439322281" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf17382439322352" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/index.xhtml" x="338" y="178" id="pf17382439322373" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf17382439322352" path="/pages/index.xhtml"/>
+  <links id="pf17382439322352" target="pf17382439322373" source="pf17382439322281" outcome="/pages/index.xhtml" redirect="true"/>
+</pageflow:Pageflow>

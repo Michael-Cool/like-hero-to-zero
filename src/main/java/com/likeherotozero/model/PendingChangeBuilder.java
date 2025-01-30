@@ -5,7 +5,7 @@ public class PendingChangeBuilder {
 
     public PendingChangeBuilder() {
         this.pendingChange = new PendingChange();
-        this.pendingChange.setStatus(PendingChange.Status.PENDING); // Default value
+        this.pendingChange.setStatus(PendingChange.Status.PENDING);
     }
 
     public PendingChangeBuilder withCountry(String country) {
@@ -18,7 +18,7 @@ public class PendingChangeBuilder {
         return this;
     }
 
-    public PendingChangeBuilder withEmissionKt(double emissionKt) { // Changed to double
+    public PendingChangeBuilder withEmissionKt(double emissionKt) {
         pendingChange.setEmissionKt(emissionKt);
         return this;
     }
@@ -51,10 +51,10 @@ public class PendingChangeBuilder {
         if (pendingChange.getCountry() == null || pendingChange.getCountry().isEmpty()) {
             missingFields.append("country, ");
         }
-        if (pendingChange.getYear() <= 0) { // Assuming year > 0 is valid
+        if (pendingChange.getYear() <= 0) {
             missingFields.append("year, ");
         }
-        if (pendingChange.getEmissionKt() == 0.0) { // Assuming 0.0 is invalid
+        if (pendingChange.getEmissionKt() == 0.0) {
             missingFields.append("emissionKt, ");
         }
         if (pendingChange.getDataSource() == null || pendingChange.getDataSource().isEmpty()) {
@@ -63,7 +63,7 @@ public class PendingChangeBuilder {
 
         if (missingFields.length() > 0) {
             String errorMessage = "Required fields are missing: " 
-                + missingFields.substring(0, missingFields.length() - 2); // Remove trailing comma and space
+                + missingFields.substring(0, missingFields.length() - 2);
             System.out.println(errorMessage);
             throw new IllegalStateException(errorMessage);
         }

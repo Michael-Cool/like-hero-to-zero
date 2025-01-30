@@ -1,8 +1,4 @@
-<!--
-   Hibernate configuration DTD
-   
-   This DTD is used for the Hibernate configuration file
-   -->
+
 <!ELEMENT hibernate-configuration (session-factory)>
 <!ELEMENT session-factory (property*, mapping*, class-cache*, collection-cache*)>
 <!ATTLIST session-factory

@@ -41,22 +41,19 @@ public class PendingChange implements Serializable {
     @Enumerated(EnumType.STRING)
     @NotNull
     @Column(name = "status", nullable = false)
-    private Status status = Status.PENDING; // Default to PENDING
+    private Status status = Status.PENDING;
 
     @Enumerated(EnumType.STRING)
     @NotNull
     @Column(name = "change_type", nullable = false)
-    private ChangeType changeType = ChangeType.INSERT; // Default to INSERT
+    private ChangeType changeType = ChangeType.INSERT;
 
     @Column(name = "affected_id")
     private Integer affectedId;
 
-    // Default constructor
     public PendingChange() {
-        // Default values are already initialized above
     }
 
-    // Getters and Setters
     public int getId() {
         return id;
     }

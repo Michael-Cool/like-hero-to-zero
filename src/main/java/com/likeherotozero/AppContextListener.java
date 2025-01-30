@@ -19,6 +19,5 @@ public class AppContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        // Resources initialization if needed
     }
 }

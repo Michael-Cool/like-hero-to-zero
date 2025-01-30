@@ -27,10 +27,10 @@ public class ModerationBean implements Serializable {
         try {
             moderationService.approveChange(changeId);
             FacesContext.getCurrentInstance().addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Change approved successfully!", null));
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Änderung erfolgreich durchgeführt!", null));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error approving change: " + e.getMessage(), null));
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler bei der Änderung: " + e.getMessage(), null));
         }
     }
 
@@ -38,10 +38,10 @@ public class ModerationBean implements Serializable {
         try {
             moderationService.rejectChange(changeId);
             FacesContext.getCurrentInstance().addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "Change rejected successfully!", null));
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Die Änderung wurde abgelehnt!", null));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error rejecting change: " + e.getMessage(), null));
+                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler beim ablehnen: " + e.getMessage(), null));
         }
     }
 }

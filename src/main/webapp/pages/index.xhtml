@@ -6,59 +6,59 @@
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-    
-		<p:growl id="logoutGrowl" life="5000" sticky="false" autoUpdate="true" styleClass="popup-message" />
-		<f:event listener="#{indexBean.checkLogout}" type="preRenderView" />
+
+        <p:growl id="logoutGrowl" life="5000" sticky="false" autoUpdate="true" styleClass="popup-message" />
+        <f:event listener="#{indexBean.checkLogout}" type="preRenderView" />
 
         <h1 class="section-title">Nachhaltigkeit im Blick!</h1>
 
-        <!-- Welcome Section -->
         <div class="welcome-section">
             <h2>Willkommen auf Like Hero To Zero</h2>
             <p>
                 Auf dieser Webseite können Sie Daten zu den CO₂-Emissionen verschiedener Länder einsehen.
-                <br/>
-                <br/>
+                <br /><br />
                 Unser Ziel ist es, mit diesen Informationen ein Bewusstsein für den Klimaschutz zu schaffen.
             </p>
         </div>
 
-        <!-- Notification for search -->
         <p:growl id="searchGrowl" showDetail="true" />
 
-        <!-- Form Section -->
         <div class="form-section">
             <h:form id="search-form">
-                <!-- Dropdown for Country Selection -->
                 <p:selectOneMenu id="country" value="#{indexBean.country}" styleClass="dropdown">
                     <f:selectItem itemLabel="Land auswählen" itemValue="" />
                     <f:selectItems value="#{indexBean.countries}" var="country" itemValue="#{country}" itemLabel="#{country}" />
                 </p:selectOneMenu>
-                
-                <!-- Search Button -->
-                <p:commandButton value="Suchen" 
-                                 action="#{indexBean.search}" 
-                                 update="results searchGrowl" 
+
+                <p:commandButton value="Suchen"
+                                 action="#{indexBean.search}"
+                                 update="results searchGrowl"
                                  styleClass="search-button" />
             </h:form>
         </div>
 
-        <!-- Search Results Section -->
         <h:panelGroup id="results" layout="block" class="results-section">
-            <p:dataTable value="#{indexBean.searchResults}" var="result" emptyMessage="Bitte wählen Sie ein Land aus." styleClass="results-table">
+            <p:dataTable value="#{indexBean.searchResults}" var="result"
+                         emptyMessage="Bitte wählen Sie ein Land aus." styleClass="results-table">
+                
                 <p:column headerText="Land">
                     <h:outputText value="#{result.country}" />
                 </p:column>
+
                 <p:column headerText="Jahr">
                     <h:outputText value="#{result.year}" />
                 </p:column>
+
                 <p:column headerText="CO₂-Emissionen (kt)">
                     <h:outputText value="#{result.emissionKt}" />
                 </p:column>
+
                 <p:column headerText="Datenquelle">
                     <h:outputText value="#{result.dataSource}" />
                 </p:column>
+                
             </p:dataTable>
         </h:panelGroup>
+
     </ui:define>
 </ui:composition>

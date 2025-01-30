@@ -9,7 +9,6 @@
         </File>
     </Appenders>
     <Loggers>
-        <!-- Add custom loggers -->
         <Logger name="javax.faces" level="DEBUG" additivity="false">
             <AppenderRef ref="Console" />
             <AppenderRef ref="File" />
@@ -20,8 +19,6 @@
         </Logger>
         
         <logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>
-        
-        <!-- Root logger -->
         <Root level="info">
             <AppenderRef ref="Console" />
             <AppenderRef ref="File" />

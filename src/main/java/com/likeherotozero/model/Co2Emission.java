@@ -22,7 +22,6 @@ public class Co2Emission {
     @Column(name = "data_source", length = 255)
     private String dataSource;
 
-    // Getters and Setters
     public int getId() {
         return id;
     }

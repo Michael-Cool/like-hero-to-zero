@@ -28,9 +28,8 @@ public class IndexBean {
     public void init() {
         try {
             countries = emissionService.getDistinctCountries();
-            System.out.println("DEBUG: Countries loaded: " + countries);
         } catch (Exception e) {
-            System.err.println("ERROR: Failed to initialize IndexBean: " + e.getMessage());
+            System.err.println("ERROR: IndexBean konnte nicht initialisiert werden: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -60,18 +59,15 @@ public class IndexBean {
     }
 
     public void search() {
-        System.out.println("DEBUG: Searching emissions for country: " + country);
 
         try {
             searchResults = emissionService.getEmissionsByCountry(country);
             if (searchResults != null) {
-                searchResults.sort(Comparator.comparing(Co2Emission::getYear).reversed()); // Sort by year (descending)
-                System.out.println("DEBUG: Number of results fetched: " + searchResults.size());
+                searchResults.sort(Comparator.comparing(Co2Emission::getYear).reversed());
             } else {
-                System.out.println("DEBUG: No results found for country: " + country);
             }
         } catch (Exception e) {
-            System.err.println("ERROR: Exception during search: " + e.getMessage());
+            System.err.println("Fehler bei der Suche: " + e.getMessage());
             e.printStackTrace();
         }
     }

@@ -1,2 +1,2 @@
 # like-hero-to-zero
-Web application prototype for displaying and managing global CO2 emissions data.
+Prototyp einer Webanwendung zur Anzeige und Verwaltung globaler CO₂-Emissionsdaten.
