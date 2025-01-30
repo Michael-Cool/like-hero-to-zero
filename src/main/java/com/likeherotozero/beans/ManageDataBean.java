@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 @Named
@@ -27,15 +28,9 @@ public class ManageDataBean implements Serializable {
     @Inject
     private Co2EmissionService emissionService;
 
-    private List<String> allCountries;
-
     @Inject
     public ManageDataBean() {
         resetNewPendingChange();
-    }
-
-    public void init() {
-        allCountries = emissionService.getDistinctCountries();
     }
 
     public PendingChange getNewPendingChange() {
@@ -55,15 +50,19 @@ public class ManageDataBean implements Serializable {
     }
 
     public List<Co2Emission> getAllEmissions() {
-        return emissionService.findAll();
+        try {
+            return emissionService.findAll();
+        } catch (Exception e) {
+            throw new IllegalStateException("Fehler beim Abruf der Daten " + e.getMessage(), e);
+        }
     }
-
-    public List<String> getAllCountries() {
-        return allCountries;
-    }
-
+    
     public void requestDeletion(Co2Emission emission) {
         try {
+            if (emission == null) {
+                throw new IllegalArgumentException("Keine Daten verfügbar.");
+            }
+
             PendingChange deleteRequest = new PendingChange();
             deleteRequest.setCountry(emission.getCountry());
             deleteRequest.setYear(emission.getYear());
@@ -80,9 +79,10 @@ public class ManageDataBean implements Serializable {
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, 
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler beim Übertragen der Daten: " + e.getMessage(), null));
+            throw new IllegalStateException("Fehler beim Übertragen der Daten: " + e.getMessage(), e);
         }
     }
-
+    
     public void saveNewPendingChange() {
         try {
             newPendingChange.setChangeType(PendingChange.ChangeType.INSERT);
@@ -96,11 +96,32 @@ public class ManageDataBean implements Serializable {
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler beim Übertragen der Daten: " + e.getMessage(), null));
+            throw new IllegalStateException("Fehler beim Übertragen der Daten: " + e.getMessage(), e);
         }
     }
 
     private void resetNewPendingChange() {
         newPendingChange = new PendingChange();
         newPendingChange.setStatus(PendingChange.Status.PENDING);
+    }
+
+    public List<String> getAllCountries() {
+        return Arrays.asList(
+            "Afghanistan", "Albanien", "Algerien", "Andorra", "Angola", "Argentinien", "Armenien", "Australien", "Österreich",
+            "Aserbaidschan", "Bahamas", "Bahrain", "Bangladesch", "Barbados", "Belarus", "Belgien", "Belize", "Benin",
+            "Bhutan", "Bolivien", "Bosnien und Herzegowina", "Botswana", "Brasilien", "Brunei", "Bulgarien", "Burkina Faso", 
+            "Burundi", "Kambodscha", "Kamerun", "Kanada", "Kap Verde", "Zentralafrikanische Republik", "Tschad",
+            "Chile", "China", "Kolumbien", "Komoren", "Kongo", "Kroatien", "Kuba", "Zypern", "Tschechien", "Dänemark",
+            "Deutschland", "Ecuador", "Ägypten", "El Salvador", "Estland", "Eswatini", "Äthiopien", "Fidschi", "Finnland",
+            "Frankreich", "Gambia", "Georgien", "Ghana", "Griechenland", "Guatemala", "Guinea", "Haiti", "Honduras",
+            "Ungarn", "Island", "Indien", "Indonesien", "Iran", "Irak", "Irland", "Israel", "Italien", "Japan",
+            "Jordanien", "Kasachstan", "Kenia", "Kuwait", "Lettland", "Libanon", "Lesotho", "Luxemburg", "Madagaskar",
+            "Malaysia", "Mali", "Malta", "Mexiko", "Mongolei", "Marokko", "Mosambik", "Myanmar", "Namibia",
+            "Nepal", "Niederlande", "Neuseeland", "Nigeria", "Nordkorea", "Norwegen", "Oman", "Pakistan", "Palästina",
+            "Panama", "Paraguay", "Peru", "Philippinen", "Polen", "Portugal", "Katar", "Rumänien", "Russland",
+            "Saudi-Arabien", "Senegal", "Serbien", "Singapur", "Slowakei", "Slowenien", "Südafrika", "Südkorea",
+            "Spanien", "Schweden", "Schweiz", "Syrien", "Tadschikistan", "Thailand", "Tunesien", "Türkei", "Ukraine",
+            "Vereinigte Arabische Emirate", "Vereinigtes Königreich", "USA", "Uruguay", "Vietnam", "Jemen", "Sambia", "Simbabwe"
+        );
     }
 }
