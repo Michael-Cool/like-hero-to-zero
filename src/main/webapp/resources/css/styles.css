@@ -429,6 +429,52 @@ h2 {
     margin: auto;
 }
 
+/* Centered Content */
+.centered-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+h1:not(.app-header h1) {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    background-color: #E8F5E9; /* Light green background */
+    color: #2E7D32; /* Dark green text */
+    padding: 15px 20px;
+    border-radius: 15px;
+    width: 50%; /* Makes it smaller than full width */
+    margin: 20px auto; /* Centers and adds space around */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Make the Table Centered */
+.moderation-table {
+    width: 90%; /* Makes it narrower */
+    margin: 0 auto; /* Centers the table */
+    text-align: center;
+}
+
+/* Center Table Headers */
+.moderation-table th {
+    text-align: center;
+}
+
+/* Center Table Cells */
+.moderation-table td {
+    text-align: center;
+}
+
+/* Center Approve & Reject Buttons */
+.moderation-table p\:commandButton {
+    display: inline-block;
+    margin: 5px 10px;
+}
+
 .submit-button {
     margin-top: 20px; /* Small margin on top */
     margin-bottom: 60px; /* Large margin at the bottom */

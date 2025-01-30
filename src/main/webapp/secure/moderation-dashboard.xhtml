@@ -4,43 +4,46 @@
                  xmlns:p="http://primefaces.org/ui"
                  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                  xmlns:f="http://xmlns.jcp.org/jsf/core">
+
     <ui:define name="content" rendered="#{loginBean.isModerator()}">
-        <h1>Moderation Dashboard</h1>
+        <div class="centered-content">
+            <h1 class="moderation-title">Moderation Dashboard</h1>
 
-        <h:form id="moderation-form">
-            <p:messages id="messages" autoUpdate="true" />
+            <h:form id="moderation-form">
+                <p:messages id="messages" autoUpdate="true" />
 
-            <p:dataTable id="pending-table" value="#{moderationBean.pendingChanges}" var="change">
-                <p:column headerText="Country">
-                    <h:outputText value="#{change.country}" />
-                </p:column>
-                <p:column headerText="Year">
-                    <h:outputText value="#{change.year}" />
-                </p:column>
-                <p:column headerText="CO2 Emissions (kt)">
-                    <h:outputText value="#{change.emissionKt}" />
-                </p:column>
-                <p:column headerText="Data Source">
-                    <h:outputText value="#{change.dataSource}" />
-                </p:column>
-                <p:column headerText="Change Type">
-				    <h:outputText value="#{change.changeType}" />
-				</p:column>
-				<p:column headerText="Actions">
-				<p:commandButton value="Approve"
-				                 action="#{moderationBean.approveChange(change.id)}"
-				                 update="pending-table"
-				                 onclick="PF('confirmDialog').show();" />
-				<p:commandButton value="Reject"
-				                 action="#{moderationBean.rejectChange(change.id)}"
-				                 update="pending-table"
-				                 onclick="PF('confirmDialog').show();" />
-				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" message="Are you sure?">
-				    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-				    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
-				</p:confirmDialog>
-				</p:column>
-            </p:dataTable>
-        </h:form>
+                <p:dataTable id="pending-table" value="#{moderationBean.pendingChanges}" var="change" styleClass="moderation-table">
+                    <p:column headerText="Country">
+                        <h:outputText value="#{change.country}" />
+                    </p:column>
+                    <p:column headerText="Year">
+                        <h:outputText value="#{change.year}" />
+                    </p:column>
+                    <p:column headerText="CO2 Emissions (kt)">
+                        <h:outputText value="#{change.emissionKt}" />
+                    </p:column>
+                    <p:column headerText="Data Source">
+                        <h:outputText value="#{change.dataSource}" />
+                    </p:column>
+                    <p:column headerText="Change Type">
+                        <h:outputText value="#{change.changeType}" />
+                    </p:column>
+                    <p:column headerText="Actions">
+                        <p:commandButton value="Approve"
+                                         action="#{moderationBean.approveChange(change.id)}"
+                                         update="pending-table"
+                                         onclick="PF('confirmDialog').show();" />
+                        <p:commandButton value="Reject"
+                                         action="#{moderationBean.rejectChange(change.id)}"
+                                         update="pending-table"
+                                         onclick="PF('confirmDialog').show();" />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" message="Are you sure?">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                        </p:confirmDialog>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </div>
     </ui:define>
 </ui:composition>
