@@ -54,9 +54,10 @@
 	                    <h:outputText value="#{emission.dataSource}" />
 	                </p:column>
 	                <p:column headerText="">
-	                    <p:commandButton value="Löschen" 
-	                                     action="#{manageDataBean.requestDeletion(emission)}" 
-	                                     update="delete-form:deleteMessages dataTable" />
+					<p:commandButton value="Löschen" 
+					                 action="#{manageDataBean.requestDeletion(emission)}" 
+					                 update="delete-form:deleteMessages dataTable"
+					                 styleClass="reject-button" />
 	                </p:column>
 	            </p:dataTable>
 	        </h:form>

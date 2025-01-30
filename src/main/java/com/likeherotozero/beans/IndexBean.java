@@ -40,7 +40,7 @@ public class IndexBean {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         if (!facesContext.getExternalContext().getFlash().isEmpty()) {
             facesContext.addMessage(null, 
-                new FacesMessage(FacesMessage.SEVERITY_INFO, "You have successfully logged out!", null));
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Sie sind abgemeldet!", null));
         }
     }
 

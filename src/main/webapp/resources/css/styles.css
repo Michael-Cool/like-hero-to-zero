@@ -107,8 +107,8 @@ body {
 }
 
 /* Remove PrimeFaces default styles */
-.ui-button.ui-state-default {
-    background-color: #4CAF50 !important;
+.ui-button.ui-state-default:not(.reject-button) {
+    background-color: #4CAF50 !important; /* Green */
     background-image: none !important;
     border: none !important;
     color: white !important;
@@ -478,6 +478,24 @@ h1:not(.app-header h1) {
 .submit-button {
     margin-top: 20px; /* Small margin on top */
     margin-bottom: 60px; /* Large margin at the bottom */
+}
+
+.confirm-button {
+    margin-bottom: 5px; /* Adjust as needed */
+}
+
+.reject-button {
+    background-color: #d32f2f !important;
+    color: white !important;
+    transition: background-color 0.3s;
+    background-image: none !important;
+    border: none !important;
+    color: white !important;
+    text-shadow: none !important;
+}
+
+.reject-button:hover {
+    background-color: #b71c1c !important;
 }
 
 /* Styles for the popup message */
