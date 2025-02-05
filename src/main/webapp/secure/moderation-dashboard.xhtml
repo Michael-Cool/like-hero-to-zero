@@ -25,9 +25,11 @@
                     <p:column headerText="Quelle">
                         <h:outputText value="#{change.dataSource}" />
                     </p:column>
-                    <p:column headerText="Art der Änderung">
-                        <h:outputText value="#{change.changeType}" />
-                    </p:column>
+					<p:column headerText="Art der Änderung">
+					    <h:outputText value="Erstellen" rendered="#{change.changeType eq 'INSERT'}" />
+					    <h:outputText value="Löschen" rendered="#{change.changeType eq 'DELETE'}" />
+					    <h:outputText value="#{change.changeType}" rendered="#{change.changeType ne 'INSERT' and change.changeType ne 'DELETE'}" />
+					</p:column>
                     <p:column headerText="">
 					<p:commandButton value="Bestätigen"
 					                 action="#{moderationBean.approveChange(change.id)}"
